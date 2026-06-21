@@ -23,6 +23,7 @@ export default function ProfilePage() {
   const [addresses, setAddresses] = useState([])
   const [paymentMethods, setPaymentMethods] = useState([])
   const [newAddr, setNewAddr] = useState({ label: 'Home', full_name: '', street: '', city: '', country: 'Egypt' })
+  const [newCard, setNewCard] = useState({ card_brand: 'Visa', number: '', expiry_month: '', expiry_year: '', is_default: false })
   const [saving, setSaving] = useState(false)
 
   useEffect(() => { setForm({ full_name: profile?.full_name || '', phone: profile?.phone || '' }) }, [profile])
@@ -42,7 +43,7 @@ export default function ProfilePage() {
     setSaving(true)
     const { error } = await updateProfile(form)
     setSaving(false)
-    notify(error ? 'Could not save changes' : 'Profile updated!', error ? 'error' : 'success')
+    notify(error ? (error.message || 'Could not save changes') : 'Profile updated!', error ? 'error' : 'success')
   }
 
   const saveAddress = async () => {
@@ -60,6 +61,37 @@ export default function ProfilePage() {
     const supabase = createClient()
     await supabase.from('addresses').delete().eq('id', id)
     setAddresses(a => a.filter(x => x.id !== id))
+  }
+
+  const saveCard = async () => {
+    const digits = newCard.number.replace(/\s/g, '')
+    if (digits.length < 12) { notify('Enter a valid card number', 'error'); return }
+    if (!newCard.expiry_month || !newCard.expiry_year) { notify('Enter the expiry date', 'error'); return }
+
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('payment_methods')
+      .insert({
+        user_id: user.id,
+        card_brand: newCard.card_brand,
+        last_four: digits.slice(-4),
+        expiry_month: Number(newCard.expiry_month),
+        expiry_year: Number(newCard.expiry_year),
+        is_default: paymentMethods.length === 0 ? true : newCard.is_default,
+      })
+      .select()
+      .single()
+
+    if (error) { notify('Could not save card', 'error'); return }
+    setPaymentMethods(p => [...p, data])
+    setNewCard({ card_brand: 'Visa', number: '', expiry_month: '', expiry_year: '', is_default: false })
+    notify('Card saved!')
+  }
+
+  const deleteCard = async (id) => {
+    const supabase = createClient()
+    await supabase.from('payment_methods').delete().eq('id', id)
+    setPaymentMethods(p => p.filter(x => x.id !== id))
   }
 
   if (!user) return null
@@ -126,18 +158,45 @@ export default function ProfilePage() {
           {paymentMethods.length === 0 ? (
             <p className="text-muted mb-5">No saved payment methods yet.</p>
           ) : paymentMethods.map(pm => (
-            <div key={pm.id} className="bg-surface border border-border rounded-md p-5 max-w-[360px] mb-4">
+            <div key={pm.id} className="bg-surface border border-border rounded-md p-5 max-w-[360px] mb-4 relative">
               <div className="flex justify-between mb-3">
                 <span className="text-xs text-muted tracking-[2px]">{pm.card_brand?.toUpperCase()}</span>
                 {pm.is_default && <Badge label="Default" variant="gold" />}
               </div>
               <p className="text-base tracking-[4px]">•••• •••• •••• {pm.last_four}</p>
               <p className="text-muted text-xs mt-2">Expires {pm.expiry_month}/{pm.expiry_year}</p>
+              <button onClick={() => deleteCard(pm.id)} className="absolute top-5 right-5 text-muted text-xs hover:text-error transition-colors">Remove</button>
             </div>
           ))}
-          <p className="text-muted text-[13px] mt-2">
-            Saved cards are added automatically during checkout when using Stripe. See{' '}
-            <code className="text-rose-light">app/api/payments/create-intent</code> to enable Stripe.
+
+          <div className="bg-surface border border-dashed border-border-light rounded-md p-5.5 max-w-[460px] mt-5">
+            <p className="text-[13px] text-muted mb-4 tracking-wide uppercase">Add New Card</p>
+            <div className="grid grid-cols-2 gap-3.5">
+              <div className="mb-4.5">
+                <label className="block text-[11px] font-medium tracking-wider uppercase mb-1.5 text-muted">Card Brand</label>
+                <select
+                  value={newCard.card_brand}
+                  onChange={e => setNewCard(c => ({ ...c, card_brand: e.target.value }))}
+                  className="w-full bg-surface border border-border-light rounded-sm text-offwhite text-sm px-3.5 py-3 outline-none focus:border-rose"
+                >
+                  <option>Visa</option>
+                  <option>Mastercard</option>
+                  <option>American Express</option>
+                </select>
+              </div>
+              <Input label="Card Number" value={newCard.number} onChange={e => setNewCard(c => ({ ...c, number: e.target.value }))} placeholder="•••• •••• •••• ••••" />
+            </div>
+            <div className="grid grid-cols-2 gap-3.5">
+              <Input label="Expiry Month" value={newCard.expiry_month} onChange={e => setNewCard(c => ({ ...c, expiry_month: e.target.value }))} placeholder="MM" />
+              <Input label="Expiry Year" value={newCard.expiry_year} onChange={e => setNewCard(c => ({ ...c, expiry_year: e.target.value }))} placeholder="YYYY" />
+            </div>
+            <Btn onClick={saveCard}>Save Card</Btn>
+          </div>
+
+          <p className="text-muted text-[13px] mt-5 max-w-[460px] leading-6">
+            ⚠️ Cards saved here are for display/checkout convenience only — no real charges are processed yet.
+            Wire up Stripe in <code className="text-rose-light">app/api/payments/create-intent</code> to enable
+            real card payments and tokenized (PCI-compliant) card storage.
           </p>
         </div>
       )}

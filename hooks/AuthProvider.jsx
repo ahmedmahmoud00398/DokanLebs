@@ -63,8 +63,20 @@ export function AuthProvider({ children }) {
       .eq('id', user.id)
       .select()
       .single()
-    if (data) setProfile(data)
-    return { data, error }
+
+    if (error) {
+      console.error('Profile update failed:', error.message)
+      return { data: null, error }
+    }
+    if (!data) {
+      // Update ran but matched/returned 0 rows — almost always an RLS policy
+      // missing WITH CHECK, or the profiles row doesn't exist yet for this user.
+      const err = { message: 'Update did not apply — check Supabase RLS policy on profiles (needs WITH CHECK) or that a profiles row exists for this user.' }
+      console.error(err.message)
+      return { data: null, error: err }
+    }
+    setProfile(data)
+    return { data, error: null }
   }
 
   const signOut = () => supabase.auth.signOut()

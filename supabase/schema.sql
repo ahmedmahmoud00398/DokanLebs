@@ -232,15 +232,21 @@ create policy "Products are public"   on public.products   for select using (tru
 create policy "Categories are public" on public.categories for select using (true);
 
 -- Users can only see/edit their own data
-create policy "Own profile"     on public.profiles         for all using (auth.uid() = id);
-create policy "Own addresses"   on public.addresses        for all using (auth.uid() = user_id);
-create policy "Own cart"        on public.cart_items       for all using (auth.uid() = user_id);
+create policy "Own profile select" on public.profiles
+  for select using (auth.uid() = id);
+create policy "Own profile update" on public.profiles
+  for update using (auth.uid() = id) with check (auth.uid() = id);
+create policy "Own profile insert" on public.profiles
+  for insert with check (auth.uid() = id);
+
+create policy "Own addresses"   on public.addresses        for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "Own cart"        on public.cart_items       for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 create policy "Own orders"      on public.orders           for select using (auth.uid() = user_id);
 create policy "Own order items" on public.order_items      for select using (
   exists (select 1 from public.orders where id = order_id and user_id = auth.uid())
 );
 create policy "Own wishlist"    on public.wishlist         for all using (auth.uid() = user_id);
-create policy "Own payments"    on public.payment_methods  for all using (auth.uid() = user_id);
+create policy "Own payments"    on public.payment_methods  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 -- Service role (backend) can do everything
 create policy "Service full access orders" on public.orders

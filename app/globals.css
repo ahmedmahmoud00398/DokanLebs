@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #080808;
+  color: #F5F0EC;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: #A86E63; border-radius: 2px; }
+
+@layer utilities {
+  .skeleton {
+    background: linear-gradient(90deg, #111111 25%, #161616 50%, #111111 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+
+  .stagger > *:nth-child(1)  { animation-delay: .05s; }
+  .stagger > *:nth-child(2)  { animation-delay: .10s; }
+  .stagger > *:nth-child(3)  { animation-delay: .15s; }
+  .stagger > *:nth-child(4)  { animation-delay: .20s; }
+  .stagger > *:nth-child(5)  { animation-delay: .25s; }
+  .stagger > *:nth-child(6)  { animation-delay: .30s; }
+  .stagger > *:nth-child(7)  { animation-delay: .35s; }
+  .stagger > *:nth-child(8)  { animation-delay: .40s; }
+}

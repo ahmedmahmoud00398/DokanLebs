@@ -181,4 +181,32 @@ footer { background: #000; color: white; padding: 48px 34px 20px; margin-top: 70
 .product-details { max-width: 1440px; margin: auto; padding: 28px 3vw 80px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr); gap: 18px; align-items: start; }.details-image { width: 100%; aspect-ratio: 1 / 1; background: #f1f2f2; }.details-image img { width: 100%; height: 100%; object-fit: cover; }.details-thumbnails { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 14px; }.details-thumbnails button { padding: 0; border: 1px solid transparent; aspect-ratio: 1; overflow: hidden; }.details-thumbnails button.active { border-color: #111; }.details-thumbnails img { width: 100%; height: 100%; object-fit: cover; }.details-copy { position: sticky; top: 20px; padding: 0 8px; }.details-copy h1 { font-size: 30px; font-weight: 400; margin: 0 0 8px; }.details-copy h2 { font-weight: 400; font-size: 25px; margin: 0 0 48px; }.details-copy > p { margin: 28px 0; }.details-copy .black-button,.details-copy .outline-button { width: 100%; margin: 8px 0; min-height: 46px; }.details-copy .text-link { display: block; margin-top: 26px; text-decoration: underline; }.details-shipping { text-decoration: underline; }
 .payment-result-page { min-height: 510px; padding: 60px 20px 80px; display: flex; flex-direction: column; align-items: center; text-align: center; }.payment-result-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; background: #111; color: #fff; font-size: 32px; font-weight: 700; }.payment-result-icon.is-failed { background: #a21b1b; }.payment-result-page h1 { font-size: 32px; font-weight: 400; margin: 16px 0 4px; }.payment-result-message { color: #777; max-width: 470px; }.payment-order-summary { width: min(520px,100%); border: 1px solid #ddd; border-radius: 10px; padding: 18px; margin: 20px 0; text-align: left; }.payment-order-summary h2 { font-size: 16px; }.payment-order-summary p { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; }.payment-order-summary span { color: #777; }.payment-order-summary .payment-total { border-top: 1px solid #ddd; padding-top: 12px; color: #111; }.payment-result-actions { display: flex; justify-content: center; gap: 12px; margin-top: 12px; }.payment-result-actions > * { min-width: 150px; text-align: center; }
 .mobile-menu { display: flex; flex-direction: column; }.mobile-menu a { order: -1; font-weight: 700; }
+.auth-terms { justify-content: flex-start!important; align-self: flex-start; width: 100%; text-align: left; }
+.header nav .header-primary-link, .header-primary-link { font-weight: inherit; position: static; }
+.header nav .header-primary-link::before { display: none; }
+.header-actions .header-favorites-count { min-width: 10px; font-size: 12px; line-height: 1; }
+.sizes button { min-width: 38px; min-height: 38px; display: inline-grid; place-items: center; cursor: pointer; background: #fff; }
+.sizes button.selected, .sizes button[aria-pressed="true"] { color: #fff; background: #111; }
+.swatches .swatch { width: 30px; height: 30px; border: 1px solid #aaa; border-radius: 50%; cursor: pointer; }
+.swatches .swatch.selected { outline: 2px solid #111; outline-offset: 3px; }
+.collections-page { max-width: 1180px; min-height: 65vh; margin: 0 auto; padding: 32px 26px 80px; }
+.collections-breadcrumb { color: #777; font-size: 12px; margin-bottom: 20px; }.collections-breadcrumb a { color: inherit; }
+.collections-page h1 { font-size: 34px; font-weight: 400; margin: 0 0 8px; }.collections-description { color: #777; margin: 0 0 36px; }
+.collections-empty { border: 1px solid #e5e5e5; border-radius: 12px; padding: 34px; max-width: 760px; box-shadow: 0 4px 18px #00000008; }.collections-empty h2 { font-size: 18px; font-weight: 500; }.collections-empty p { color: #777; line-height: 1.6; }.collections-empty .outline-button { padding: 10px 18px; }
+.header-actions button .header-favorites-count { display: inline-block; }
+.original-price { color: #888; font-size: .62em; font-weight: 400; margin-inline-start: 8px; }
+.product-modal-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }.product-modal-heading h1,.product-modal-heading h2 { margin: 0; }
+.favorite-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border: 1px solid #aaa; border-radius: 999px; font-size: 12px; white-space: nowrap; }.favorite-toggle[aria-pressed="true"] { border-color: #111; }
+.mobile-menu a { font-weight: inherit; }
+.header nav { align-items: center; }
+.header nav > a, .header nav > button:not(.language-nav) { display: inline-flex; align-items: center; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; font-size: 13px; font-weight: 400; line-height: 1; text-decoration: none; white-space: nowrap; }
+.header nav > a::before, .header nav > button::before { display: none; }
+.auth-card form > label.auth-terms { display: flex !important; flex-direction: row; align-items: center; justify-content: flex-start; align-self: stretch; gap: 8px !important; width: 100%; text-align: left; font-size: 12px !important; line-height: 1.4; }
+.auth-terms input[type="checkbox"] { flex: 0 0 16px; width: 16px; height: 16px; margin: 0; padding: 0; border: initial; border-radius: 0; }
+.auth-terms > span { display: inline; flex: 0 1 auto; text-align: left; }
+.terms-link { text-decoration: underline; }
+.map { display: block; overflow: hidden; background: #f1f1f1; color: #666; }
+.map iframe { display: block; width: 100%; height: 100%; min-height: 280px; border: 0; }
+.map p { display: grid; min-height: 280px; margin: 0; padding: 24px; place-items: center; text-align: center; font-size: 13px; }
+@media (max-width: 700px) { .map iframe, .map p { min-height: 170px; } }
 @media (max-width: 700px) { .auth-page { padding: 16px 12px; }.auth-layout { display: block; min-height: 0; padding: 8px; }.auth-art { display: none; }.auth-card { padding: 22px 12px; }.auth-card h1 { font-size: 28px; }.product-details { display: block; padding: 10px 12px 50px; }.details-copy { position: static; padding: 18px 2px; }.details-copy h2 { margin-bottom: 24px; }.details-thumbnails { gap: 8px; }.payment-result-page { padding-top: 45px; }.payment-result-page h1 { font-size: 28px; }.payment-result-actions { flex-direction: column; width: 100%; }.auth-name-fields { gap: 8px; } }

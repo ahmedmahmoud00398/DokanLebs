@@ -2,8 +2,8 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { addressService, orderService } from '@/lib/store-services';
-import { ChevronDown, Heart, Menu, Minus, Plus, Search, ShoppingBag, UserRound, X } from 'lucide-react';
-const imageUrls = { hero: '/placeholder.svg?height=720&width=1440&query=fashion+hero+placeholder', sweatshirt: '/placeholder.svg?height=640&width=520&query=black+sweatshirt+placeholder', jacket: '/placeholder.svg?height=640&width=520&query=leather+jacket+placeholder', search: '/placeholder.svg?height=640&width=520&query=clothing+product+placeholder', checkout: '/placeholder.svg?height=640&width=520&query=denim+jacket+placeholder', denim: '/placeholder.svg?height=640&width=520&query=jeans+placeholder', filter: '/placeholder.svg?height=640&width=520&query=white+pants+placeholder' };
+import { ChevronDown, ChevronLeft, ChevronRight, Heart, Menu, Minus, Plus, Search, ShoppingBag, UserRound, X } from 'lucide-react';
+const imageUrls = { sweatshirt: '/placeholder.svg?height=640&width=520&query=black+sweatshirt+placeholder', jacket: '/placeholder.svg?height=640&width=520&query=leather+jacket+placeholder', search: '/placeholder.svg?height=640&width=520&query=clothing+product+placeholder', checkout: '/placeholder.svg?height=640&width=520&query=denim+jacket+placeholder', denim: '/placeholder.svg?height=640&width=520&query=jeans+placeholder', filter: '/placeholder.svg?height=640&width=520&query=white+pants+placeholder' };
 const products = [['ZARA JEANS', 850, 'denim', 'Jeans'], ['H&M PANTS', 1500, 'checkout', 'Jeans'], ['LV JEANS', 1200, 'search', 'Jeans'], ['SWEAT PANTS', 1300, 'sweatshirt', 'Sweat Pants'], ['WIDE LEG PANTS', 850, 'denim', 'Wild Leg'], ['CLASSIC PANTAS', 1500, 'jacket', 'Tailer Pants'], ['CHARMUEIS PANTS', 500, 'filter', 'Jeans'], ['OLX PANTS', 1300, 'search', 'Wild Leg'], ['TAILER PANTS', 850, 'jacket', 'Tailer Pants'], ['SPORT PANTS', 1500, 'sweatshirt', 'Sweat Pants'], ['SHORT', 500, 'checkout', 'Tailer Pants'], ['ADIDAS ADIBREAK', 1300, 'denim', 'Wild Leg']].map(([name, price, image, category]) => ({ id: String(name).toLowerCase().replaceAll(' ', '-'), name: String(name), price: Number(price), image: imageUrls[image], category: String(category), colors: ['Cream', 'Black', 'Sage'], sizes: ['XS', 'S', 'M', 'L', 'XL'] }));
 const t = (ar, en) => ar ? ({ 'Wear Your Vibe': 'ارتدِ أسلوبك', 'Shop Now': 'تسوق الآن', 'Collections': 'المجموعات', 'New Arrival': 'وصل حديثًا', 'Best-Sellers': 'الأكثر مبيعًا', 'Sales': 'التخفيضات', 'shop by category': 'تسوق حسب الفئة', 'Winter collection': 'مجموعة الشتاء', 'Our store': 'متجرنا', 'SHOP': 'المتجر', 'Shop': 'تسوق', 'Category': 'الفئات', 'About': 'من نحن', 'Sort': 'ترتيب', 'Filter': 'فلترة', 'Add to cart': 'أضف للسلة', 'Add To Cart': 'أضف إلى السلة', 'View Full Details': 'عرض التفاصيل الكاملة', 'Bag': 'السلة', 'Remove': 'حذف', 'Your bag is empty.': 'السلة فارغة.', 'Checkout': 'الدفع', 'Delivery': 'التوصيل', 'Payment Method': 'طريقة الدفع', 'Shipping Method': 'طريقة الشحن', 'Complete Order': 'إتمام الطلب', 'Product Details': 'تفاصيل المنتج', 'PRODUCT COLOR': 'لون المنتج', 'PRODUCT SIZE': 'مقاس المنتج', 'See Results': 'عرض النتائج', 'Colors': 'الألوان', 'Size': 'المقاس', 'Contact Us': 'تواصل معنا', 'Account': 'الحساب', 'Search': 'بحث', 'Menu': 'القائمة', 'Favorites': 'المفضلة', 'Cart': 'السلة', 'Top': 'القمصان', 'Bottoms': 'البناطيل', 'Accessories': 'إكسسوارات', 'Shoes': 'أحذية', 'CONTACT US': 'تواصل معنا', 'CATEGORIES': 'الفئات', 'CUSTOMERS': 'العملاء', 'SOCIAL MEDIA': 'وسائل التواصل', 'Refund Policy': 'سياسة الاسترجاع', 'Support': 'الدعم', 'Bottom': 'البناطيل', 'Log in': 'تسجيل الدخول', 'Sign up': 'إنشاء حساب', 'Saved addresses': 'العناوين المحفوظة', 'Add address': 'إضافة عنوان', 'Save address': 'حفظ العنوان', 'Select address': 'اختر العنوان', 'New address': 'عنوان جديد', 'Cash on delivery': 'الدفع عند الاستلام', 'Place order': 'تأكيد الطلب', 'No address saved': 'لا توجد عناوين محفوظة' }[en] || en) : en;
 function Header({ ar, toggle, navigate, open, count, favoriteCount }) {
@@ -16,26 +16,266 @@ function Header({ ar, toggle, navigate, open, count, favoriteCount }) {
         return () => window.removeEventListener('dokan-favorites-updated', updateCount);
     }, []);
     return <>
-        <div className="promo"><div className="promo-track"><span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span><span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span></div></div>
+        <div className="promo">
+            <div className="promo-track">
+                <div className="promo-group">
+                    <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
+                    <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
+                    <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
+                </div>
+                <div className="promo-group" aria-hidden="true">
+                    <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
+                    <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
+                    <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
+                </div>
+            </div>
+        </div>
         <header className="header">
-            <div className="mobile-controls"><button className="mobile-only icon-button" onClick={() => open('menu')} aria-label={label('Menu')}><Menu size={18} /></button><button className="mobile-only mobile-language" onClick={toggle}>{ar ? 'EN' : 'عربي'}</button></div>
+            <div className="mobile-controls">
+                <button className="mobile-only icon-button" onClick={() => open('menu')} aria-label={label('Menu')}>
+                    <Menu size={18} />
+                </button>
+                <button className="mobile-only mobile-language" onClick={toggle}>{ar ? 'EN' : 'عربي'}
+                </button>
+            </div>
             <button className="logo" onClick={() => navigate('home')}>Dokan Lebss</button>
-            <nav><a href="/track-order">{ar ? 'تتبع الطلب' : 'Track Order'}</a><a href="/collections">{ar ? 'المجموعات' : 'Collection'}</a><button onClick={() => navigate('shop')}>{label('Shop')}</button><button onClick={() => navigate('home')}>{label('New Arrival')}</button><button onClick={() => navigate('refund')}>{label('About')}</button><button className="language-nav" onClick={toggle}>{ar ? 'EN' : 'عربي'}</button></nav>
-            <div className="header-actions"><button onClick={() => open('search')} aria-label={label('Search')}><Search size={18} /></button><button onClick={() => open('favorites')} aria-label={`${label('Favorites')} (${savedFavoriteCount})`}><Heart size={19} fill={savedFavoriteCount ? 'currentColor' : 'none'} /><span className="header-favorites-count">{savedFavoriteCount}</span></button><button onClick={() => open('account')} aria-label={label('Account')}><UserRound size={18} /></button><button onClick={() => open('cart')} aria-label={label('Cart')}><ShoppingBag size={18} /></button><span>{count}</span></div>
+            <nav>
+                <a href="/track-order">{ar ? 'تتبع الطلب' : 'Track Order'}</a>
+                <a href="/collections">{ar ? 'المجموعات' : 'Collection'}</a>
+                <button onClick={() => navigate('shop')}>{label('Shop')}</button>
+                <button onClick={() => navigate('shop')}>{label('New Arrival')}</button>
+                <button onClick={() => navigate('refund')}>{label('About')}</button>
+                <button className="language-nav" onClick={toggle}>{ar ? 'EN' : 'عربي'}</button>
+            </nav>
+            <div className="header-actions">
+                <button onClick={() => open('search')} aria-label={label('Search')}>
+                    <Search size={18} />
+                </button>
+                <button onClick={() => open('favorites')} aria-label={`${label('Favorites')} (${savedFavoriteCount})`}>
+                    <Heart size={19} fill={savedFavoriteCount ? 'currentColor' : 'none'} />
+                    <span className="header-favorites-count">{savedFavoriteCount}</span>
+                </button>
+                <button onClick={() => open('account')} aria-label={label('Account')}>
+                    <UserRound size={18} /></button>
+                <button onClick={() => open('cart')} aria-label={label('Cart')}>
+                    <ShoppingBag size={18} />
+                </button>
+                <span>{count}</span>
+            </div>
         </header>
     </>;
 }
-function Footer({ ar }) { const label = (x) => t(ar, x); return _jsxs("footer", { children: [_jsxs("div", { className: "footer-grid", children: [_jsxs("div", { children: [_jsx("small", { children: label('CONTACT US') }), _jsx("p", { children: '+20 123 456 789' }), _jsx("p", { children: 'Dokan.EL-Labas@GMAIL.COM' })] }), _jsxs("div", { children: [_jsx("small", { children: label('CATEGORIES') }), _jsx("p", { children: label('Top') }), _jsx("p", { children: label('Bottom') }), _jsx("p", { children: label('Accessories') })] }), _jsxs("div", { children: [_jsx("small", { children: label('CUSTOMERS') }), _jsx("p", { children: label('Refund Policy') }), _jsx("p", { children: label('Support') })] }), _jsxs("div", { children: [_jsx("small", { children: label('SOCIAL MEDIA') }), _jsx("p", { children: 'FACEBOOK' }), _jsx("p", { children: 'INSTAGRAM' })] })] }), _jsx("div", { className: "footer-brand", children: 'Dokan Lebss' })] }); }
-function Home({ ar, navigate }) {
+function Footer({ ar, navigate }) {
+    const label = (text) => t(ar, text);
+    const openShop = (event) => {
+        event.preventDefault();
+        navigate('shop');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const openRefundPolicy = (event) => {
+        event.preventDefault();
+        navigate('refund');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    return (
+        <footer>
+            <div className="footer-grid">
+                <div>
+                    <small>{label('CONTACT US')}</small>
+                    <p><a href="tel:+201212813273" style={{ color: 'inherit', textDecoration: 'none' }}>+20 121 281 3273</a></p>
+                    <p><a href="mailto:Dokan.EL-Labas@GMAIL.COM" style={{ color: 'inherit', textDecoration: 'none' }}>Dokan.EL-Labas@GMAIL.COM</a></p>
+                    <p>SAT - FRI 9AM -12PM</p>
+                </div>
+                <div>
+                    <small>{label('CATEGORIES')}</small>
+                    {['Top', 'Bottom', 'Accessories', 'Shoes'].map((category) => (
+                        <p key={category}>
+                            <a href="/shop" onClick={openShop} style={{ color: 'inherit', textDecoration: 'none' }}>{label(category)}</a>
+                        </p>
+                    ))}
+                </div>
+                <div>
+                    <small>{label('CUSTOMERS')}</small>
+                    <p><a href="/refund-policy" onClick={openRefundPolicy} style={{ color: 'inherit', textDecoration: 'none' }}>{label('Refund Policy')}</a></p>
+                    <p><a href="mailto:Dokan.EL-Labas@GMAIL.COM" style={{ color: 'inherit', textDecoration: 'none' }}>DOKAN.ELABAS@GMAIL.COM</a></p>
+                    <p>SAT - FRI 9AM -12PM</p>
+                </div>
+                <div>
+                    <small>{label('SOCIAL MEDIA')}</small>
+                    <p><a href="https://www.facebook.com/profile.php?id=100091251616407" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FACEBOOK</a></p>
+                    <p><a href="https://www.instagram.com/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>INSTAGRAM</a></p>
+                    <p><a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TIKTOK</a></p>
+                </div>
+            </div>
+            <a className="footer-brand" href="/" style={{ color: 'inherit', textDecoration: 'none' }}>Dokan Lebss</a>
+        </footer>
+    );
+}
+function Home({ ar, navigate, select }) {
     const label = (x) => t(ar, x);
-    const winterCarousel = useRef(null);
-    const winterSelection = products;
+    const [winterCarouselIndex, setWinterCarouselIndex] = useState(0);
+    const [winterAnimationDirection, setWinterAnimationDirection] = useState(1);
+    const campaignCards = [
+        { title: 'New Arrival', image: '/home-card-images/new-arrival.png' },
+        { title: 'Best-Sellers', image: '/home-card-images/best-sellers.png' },
+        { title: 'Sales', image: '/home-card-images/sales.png' },
+    ];
+    const categoryCards = [
+        { title: 'Top', image: '/home-card-images/category-top.png' },
+        { title: 'Bottoms', image: '/home-card-images/category-bottoms.png' },
+        { title: 'Accessories', image: '/home-card-images/category-accessories.png' },
+        { title: 'Shoes', image: '/home-card-images/category-shoes.png' },
+    ];
+    const winterSelection = [
+        { id: 'winter-sweatshirt', name: 'Oversized Sweatshirts', price: 850, image: '/e9b39c94-37ce-4bee-a1db-30924d5bfed3.jpeg', colors: ['Black'], sizes: ['XS', 'S', 'M', 'L', 'XL'] },
+        { id: 'winter-coat', name: 'Sweater Coat', price: 1500, image: 'Rectangle 7.png', colors: ['Black'], sizes: ['XS', 'S', 'M', 'L', 'XL'] },
+        { id: 'winter-bag', name: 'Concertina Phone Bag', price: 500, image: '/home-card-images/category-accessories.png', colors: ['Black'], sizes: ['One Size'] },
+        { id: 'winter-jacket', name: 'Leather Jacket', price: 1300, image: 'Rectangle 9.png', colors: ['Black'], sizes: ['XS', 'S', 'M', 'L', 'XL'] },
+    ];
+    const rotateWinterProducts = (step) => {
+        setWinterAnimationDirection(step);
+        setWinterCarouselIndex((current) => (current + step + winterSelection.length) % winterSelection.length);
+    };
+    const orderedWinterSelection = winterSelection.map((_, index) =>
+        winterSelection[(index + winterCarouselIndex) % winterSelection.length]
+    );
+
     return <main>
-        <section className="hero" style={{ backgroundImage: `url(${imageUrls.hero})` }}><div><h1>{label('Wear Your Vibe')}</h1><p>{ar ? 'أساسيات أنيقة تناسب أسلوب حياتك أينما ذهبت.' : 'A collection of refined essentials made to keep up with your lifestyle, wherever it takes you.'}</p><button onClick={() => navigate('shop')}>{label('Shop Now')}</button><a className="home-collection-link" href="/collections">{label('Collections')}</a></div></section>
-        <section className="home-section"><p className="eyebrow">{label('shop by category')}</p><div className="category-grid">{['Top', 'Bottoms', 'Accessories', 'Shoes'].map((item, index) => <button key={item} onClick={() => navigate('shop')}><img src={[imageUrls.search, imageUrls.denim, imageUrls.sweatshirt, imageUrls.jacket][index]} alt={item} /><span>{label(item)}</span></button>)}</div></section>
-        <section className="home-section"><div className="winter-carousel-heading"><p className="eyebrow">{ar ? 'مجموعة الشتاء' : 'Winter collection'}</p><div className="winter-carousel-controls"><button type="button" aria-label={ar ? 'السابق' : 'Previous products'} onClick={() => winterCarousel.current?.scrollBy({ left: -winterCarousel.current.clientWidth, behavior: 'smooth' })}>←</button><button type="button" aria-label={ar ? 'التالي' : 'Next products'} onClick={() => winterCarousel.current?.scrollBy({ left: winterCarousel.current.clientWidth, behavior: 'smooth' })}>→</button></div></div><div className="mini-products winter-carousel" ref={winterCarousel}>{winterSelection.map((product) => <button key={product.id} onClick={() => navigate('shop')}><img src={product.image} alt={product.name} /><p>{product.name}</p><span>{product.price} LE</span></button>)}</div></section>
-        <section className="sale-banner"><p>{ar ? 'خصم 25٪ إذا طلبت من الموقع' : '25% sale if you order from website'}</p><button onClick={() => navigate('shop')}>{label('Shop Now')}</button></section>
-        <section className="home-section store"><p className="eyebrow">{ar ? 'متجرنا' : 'Our store'}</p><div><div className="store-information"><strong>Dokan Lebss</strong><p>+20 123 456 789</p><p>{ar ? 'السبت - الجمعة 9 صباحًا - 12 ظهرًا' : 'SAT - FRI 9AM -12PM'}</p></div><div className="map">{process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ? <iframe title={ar ? 'موقع متجر دوكان لبس على الخريطة' : 'Dokan Lebss store location map'} src={process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /> : <p>{ar ? 'أضف رابط تضمين Google Maps في NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL' : 'Add your Google Maps embed URL in NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL'}</p>}</div></div></section>
+        <section className="relative flex h-[56vw] min-h-[190px] items-center overflow-hidden bg-neutral-100 px-3 text-white md:h-[950px] md:max-h-none md:px-10  ">
+            <img className="absolute inset-0 h-full w-full w-contain b" src="006194cc-799c-4d07-b3ea-21cd5ac57274.jpeg" alt="" />
+            <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
+            <div className="relative z-10 mt-[60px] max-w-[620px] md:mt-[100px]">
+                <h1 className="w-600 mb-[18px] text-[9xl] font-bold leading-[.95] tracking-[-1px] md:text-[clamp(42px,6vw,128px)] md:tracking-[-3px]">
+                    {label('Wear Your Vibe')}
+                </h1>
+                <button
+                    className="mt-[50px] mr-1 !bg-black px-[11px] py-[6px] text-[8px] !text-white md:px-[22px] md:py-[12px] md:text-[11px] ml-[10px]"
+                    onClick={() => navigate('shop')}
+                >
+                    {label('Shop Now')}
+                </button>
+                <a
+                    className="mt-[50px] mr-1 !bg-white px-[11px] py-[6px] text-[8px] !text-black md:px-[22px] md:py-[12px] md:text-[15px] ml-[10px]"
+                    href="/collections"
+                >
+                    {label('Collections')}
+                </a>
+            </div>
+        </section>
+
+        <section className="px-[9px] pt-7 md:px-[26px] mt-[64px] mb-[64px]">
+            <div className="grid grid-cols-3 gap-[5px] md:gap-[24px]">
+                {campaignCards.map(({ title, image }) => (
+                    <button
+                        className="group relative aspect-square overflow-hidden bg-neutral-600 text-left"
+                        type="button"
+                        key={title}
+                        aria-label={label(title)}
+                        onClick={() => navigate('shop')}
+                    >
+                        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt="" />
+                        <span className="absolute inset-0 bg-black/20" aria-hidden="true" />
+                        <span className="absolute bottom-[7px] left-[7px] z-10 text-[8px] text-white md:bottom-[10px] md:left-[10px] md:text-xl">{label(title)}</span>
+                    </button>
+                ))}
+            </div>
+        </section>
+
+        <section className=" w-full px-[9px] pt-4 md:px-[26px] md:pt-[30px] mt-[64px]">
+            <p className="mb-[13px] text-[7px] font-semibold md:mb-5 md:text-2xl">{label('Shop By Category')}</p>
+            <div className="grid grid-cols-4 gap-[5px] md:gap-[20px]">
+                {categoryCards.map(({ title, image }) => (
+                    <button
+                        className="relative overflow-hidden bg-neutral-200 md:aspect-[.84] "
+                        type="button"
+                        key={title}
+                        onClick={() => navigate('shop')}
+                    >
+                        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt="" />
+                        <span className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-white px-[5px] py-[3px] text-[8px] text-black md:px-8 md:py-[15px] md:text-[18px] md:font-semibold">{label(title)}</span>
+                    </button>
+                ))}
+            </div>
+        </section>
+
+        <section className="px-[9px] pt-[18px] md:px-[26px] md:pt-[46px] mt-[64px]">
+            <div className="mb-[13px] flex min-h-[23px] items-center justify-start" dir="ltr">
+                <p className="text-[7px] md:text-2xl font-semibold">{ar ? 'مجموعة الشتاء' : 'Winter collection'}</p>
+            </div>
+            <div
+                key={winterCarouselIndex}
+                className={`winter-products-transition flex snap-x gap-[7px] md:gap-[10px] ${winterAnimationDirection > 0 ? 'winter-products-next' : 'winter-products-previous'}`}
+            >
+                {orderedWinterSelection.map((product) => (
+                    <button
+                        className="min-w-0 basis-[calc(25%_-_6px)] snap-start text-start md:basis-[calc(25%_-_8px)]"
+                        type="button"
+                        key={product.id}
+                        onClick={() => select(product)}
+                    >
+                        <span className="relative block aspect-square overflow-hidden bg-neutral-200">
+                            <img className="absolute inset-0 h-full w-full object-cover" src={product.image} alt="" />
+                        </span>
+                        <span className="mt-[5px] block text-[7px] leading-[1.2] md:text-xl">{product.name}</span>
+                        <span className="block text-[7px] md:text-xl">{product.price} LE</span>
+                    </button>
+                ))}
+            </div>
+            <div className="mt-5 flex justify-center gap-6" dir="ltr">
+                <button
+                    className="grid size-[46px] place-items-center rounded-full border-2 border-sky-600 bg-white text-sky-600 shadow-sm transition-colors hover:bg-sky-600 hover:text-white md:size-[50px]"
+                    type="button"
+                    aria-label={ar ? 'المنتجات السابقة' : 'Previous products'}
+                    onClick={() => rotateWinterProducts(-1)}
+                >
+                    <ChevronLeft className="size-7" strokeWidth={2.5} />
+                </button>
+                <button
+                    className="grid size-[46px] place-items-center rounded-full border-2 border-sky-600 bg-white text-sky-600 shadow-sm transition-colors hover:bg-sky-600 hover:text-white md:size-[50px]"
+                    type="button"
+                    aria-label={ar ? 'المنتجات التالية' : 'Next products'}
+                    onClick={() => rotateWinterProducts(1)}
+                >
+                    <ChevronRight className="size-7" strokeWidth={2.5} />
+                </button>
+            </div>
+        </section>
+
+        <section className="mt-[18px] bg-black px-4 py-5 text-center text-white md:mt-40 md:px-5 md:py-[248px] md:mb-20">
+            <p className="mb-3 text-sm leading-[1.35] md:mb-6 md:text-4xl">{ar ? 'خصم 25٪ إذا طلبت من الموقع' : '25% sale if you order from website'}</p>
+            <button
+                className=" !bg-white px-3 py-[6px] text-[8px] !text-black md:px-[24px] md:py-[10px] md:text-[24px]"
+                onClick={() => navigate('shop')}
+            >
+                {label('Shop Now')}
+            </button>
+        </section>
+
+        <section className="px-[9px] pt-3 md:px-[26px] md:pt-[46px] md:mb-44">
+            <p className="mb-[10px] text-[9px] md:mb-5 md:text-2xl font-semibold">{ar ? 'متجرنا' : 'Our store'}</p>
+            <div className="grid grid-cols-2 gap-1">
+                <div className="relative aspect-[1.45] overflow-hidden bg-neutral-200">
+                    <img className="absolute inset-0 h-full w-full object-cover" src="5d59833a-0f59-4800-aae3-d1b9b28e2c69.jpeg" alt="" />
+                </div>
+                <div className="relative aspect-[1.45] overflow-hidden bg-neutral-100">
+                    {process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ? (
+                        <iframe
+                            className="absolute inset-0 h-full w-full border-0"
+                            title={ar ? 'موقع متجر دكان لبس على الخريطة' : 'Dokan Lebss store location map'}
+                            src={process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            allowFullScreen
+                        />
+                    ) : (
+                        <p className="grid h-full min-h-[96px] place-items-center p-2 text-center text-[8px] text-neutral-600 md:text-xs">
+                            {ar ? 'أضف رابط تضمين Google Maps في NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL' : 'Add your Google Maps embed URL in NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL'}
+                        </p>
+                    )}
+                </div>
+            </div>
+        </section>
     </main>;
 }
 function Shop({ ar, add, select, open, sort, filter, setFilter }) {
@@ -219,7 +459,8 @@ function SearchPanel({ ar, close, select }) {
 }
 function FavoritesPanel({ ar, favorites, toggle, close, select }) {
     useEffect(() => { window.dispatchEvent(new CustomEvent('dokan-favorites-updated', { detail: favorites.length })); }, [favorites]);
-    return _jsxs("section", { className: "filter-panel", children: [_jsx("button", { className: "close", onClick: close, "aria-label": "Close", children: _jsx(X, {}) }), _jsx("h2", { children: ar ? 'المفضلة' : 'Favorites' }), products.map((product) => { const saved = favorites.includes(product.id); return _jsxs("div", { className: "saved-address", children: [_jsxs("button", { type: "button", onClick: () => { close(); select(product); }, children: [_jsx("img", { src: product.image, alt: product.name, style: { width: 64, height: 64, objectFit: 'cover' } }), " ", product.name, " \u00B7 ", product.price, " LE"] }), _jsx("button", { className: "text-link", onClick: () => toggle(product.id), children: saved ? (ar ? 'إزالة' : 'Remove') : (ar ? 'حفظ' : 'Save') })] }, product.id); })] });
+    const savedProducts = products.filter((product) => favorites.includes(product.id));
+    return _jsxs("section", { className: "filter-panel", children: [_jsx("button", { className: "close", onClick: close, "aria-label": "Close", children: _jsx(X, {}) }), _jsx("h2", { children: ar ? 'المفضلة' : 'Favorites' }), savedProducts.length === 0 ? _jsx("p", { role: "status", children: ar ? 'لم تحفظ أي منتجات في المفضلة بعد.' : 'You have no saved favorites yet.' }) : savedProducts.map((product) => _jsxs("div", { className: "saved-address", children: [_jsxs("button", { type: "button", onClick: () => { close(); select(product); }, children: [_jsx("img", { src: product.image, alt: product.name, style: { width: 64, height: 64, objectFit: 'cover' } }), " ", product.name, " \u00B7 ", product.price, " LE"] }), _jsx("button", { className: "text-link", onClick: () => toggle(product.id), children: ar ? 'إزالة' : 'Remove' })] }, product.id))] });
 }
 export default function Storefront() {
     useEffect(() => {
@@ -236,6 +477,6 @@ export default function Storefront() {
             if (Array.isArray(savedFavorites)) setFavorites(savedFavorites.filter((id) => products.some((product) => product.id === id)));
         }
         catch { } setHydrated(true);
-    }, []); useEffect(() => { if (hydrated) localStorage.setItem('dokan-language', ar ? 'ar' : 'en'); }, [ar, hydrated]); useEffect(() => { if (hydrated) { document.documentElement.lang = ar ? 'ar' : 'en'; document.documentElement.dir = ar ? 'rtl' : 'ltr'; } }, [ar, hydrated]); useEffect(() => { if (hydrated) localStorage.setItem('dokan-cart', JSON.stringify(items)); }, [items, hydrated]); useEffect(() => { if (hydrated) localStorage.setItem('dokan-favorites', JSON.stringify(favorites)); }, [favorites, hydrated]); const add = (p, size = 'M', color = 'Cream') => setItems(cur => { const key = p.id + '-' + size + '-' + color; const found = cur.find(x => x.id + '-' + x.size + '-' + x.color === key); return found ? cur.map(x => x.id + '-' + x.size + '-' + x.color === key ? { ...x, quantity: x.quantity + 1 } : x) : [...cur, { ...p, size, color, quantity: 1 }]; }); const update = (key, delta) => setItems(cur => cur.map(x => x.id + '-' + x.size + '-' + x.color === key ? { ...x, quantity: Math.max(1, x.quantity + delta) } : x)); const remove = (key) => setItems(cur => cur.filter(x => x.id + '-' + x.size + '-' + x.color !== key)); const toggleFavorite = (id) => setFavorites((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]); const count = items.reduce((s, x) => s + x.quantity, 0); const close = () => setDrawer(null); return _jsxs("div", { className: "site", dir: ar ? 'rtl' : 'ltr', children: [_jsx(Header, { ar: ar, toggle: () => setAr(x => !x), navigate: setPage, open: setDrawer, count: count }), page === 'home' && _jsx(Home, { ar: ar, navigate: setPage }), " ", page === 'shop' && _jsx(Shop, { ar: ar, add: p => add(p), select: setModal, open: setDrawer, sort: sort, filter: filter, setFilter: setFilter }), " ", page === 'checkout' && _jsx(Checkout, { ar: ar, items: items }), " ", page === 'details' && _jsx(ProductDetails, { ar: ar, product: details || products[0], add: add, buyNow: (p, size, color) => { add(p, size, color); setPage('checkout'); }, navigate: setPage }), " ", page === 'refund' && _jsxs("main", { className: "refund", children: [_jsx("h1", { children: "Refund Policy" }), _jsx("p", { children: "Our refund policy information." })] }), _jsx(Footer, { ar: ar }), modal && _jsx(ProductModal, { ar: ar, product: modal, close: () => setModal(null), add: add, details: () => { setDetails(modal); setModal(null); setPage('details'); } }), drawer && _jsx("div", { className: "overlay", onMouseDown: e => e.target === e.currentTarget && close(), children: _jsxs("div", { className: drawer === 'sort' ? 'drawer sort-drawer' : 'drawer', children: [drawer === 'cart' && _jsxs(_Fragment, { children: [_jsx("button", { className: "close", onClick: close, children: _jsx(X, {}) }), _jsx(Cart, { ar: ar, items: items, checkout: () => { close(); setPage('checkout'); }, update: update, remove: remove, shop: () => { close(); setPage('shop'); } })] }), drawer === 'account' && _jsxs(_Fragment, { children: [_jsx("button", { className: "close", onClick: close, children: _jsx(X, {}) }), _jsx(Account, { ar: ar })] }), drawer === 'search' && _jsx(SearchPanel, { ar: ar, close: close, select: setModal }), drawer === 'favorites' && _jsx(FavoritesPanel, { ar: ar, favorites: favorites, toggle: toggleFavorite, close: close, select: setModal }), drawer === 'filter' && _jsx(FilterPanel, { ar: ar, value: filter, setValue: v => setFilter(current => ({ ...current, ...v })), close: close }), " ", drawer === 'sort' && _jsxs("section", { className: "filter-panel", children: [_jsx("button", { className: "close", onClick: close, children: _jsx(X, {}) }), _jsx("h2", { children: t(ar, 'Sort') }), [['default', 'Best Sellers'], ['recent', 'Last Arrive'], ['low', 'Price Low To High'], ['high', 'Price High To Low']].map(([v, l]) => _jsx("button", { className: "filter-sort-option", onClick: () => { setSort(v); close(); }, children: ar ? { 'Best Sellers': 'الأكثر مبيعًا', 'Last Arrive': 'الأحدث وصولًا', 'Price Low To High': 'السعر من الأقل للأعلى', 'Price High To Low': 'السعر من الأعلى للأقل' }[l] || l : l }, v))] }), drawer === 'menu' && _jsxs("nav", { className: "mobile-menu", children: [_jsx("button", { onClick: () => { close(); setPage('shop'); }, children: t(ar, 'Shop') }), _jsx("a", { href: "/track-order", children: ar ? 'تتبع الطلب' : 'Track Order' }), _jsx("a", { href: "/collections", children: ar ? 'المجموعات' : 'Collection' }), _jsx("button", { onClick: () => { close(); setAr(x => !x); }, children: ar ? 'English' : 'العربية' })] })] }) })] });
+    }, []); useEffect(() => { if (hydrated) localStorage.setItem('dokan-language', ar ? 'ar' : 'en'); }, [ar, hydrated]); useEffect(() => { if (hydrated) { document.documentElement.lang = ar ? 'ar' : 'en'; document.documentElement.dir = ar ? 'rtl' : 'ltr'; } }, [ar, hydrated]); useEffect(() => { if (hydrated) localStorage.setItem('dokan-cart', JSON.stringify(items)); }, [items, hydrated]); useEffect(() => { if (hydrated) localStorage.setItem('dokan-favorites', JSON.stringify(favorites)); }, [favorites, hydrated]); const add = (p, size = 'M', color = 'Cream') => setItems(cur => { const key = p.id + '-' + size + '-' + color; const found = cur.find(x => x.id + '-' + x.size + '-' + x.color === key); return found ? cur.map(x => x.id + '-' + x.size + '-' + x.color === key ? { ...x, quantity: x.quantity + 1 } : x) : [...cur, { ...p, size, color, quantity: 1 }]; }); const update = (key, delta) => setItems(cur => cur.map(x => x.id + '-' + x.size + '-' + x.color === key ? { ...x, quantity: Math.max(1, x.quantity + delta) } : x)); const remove = (key) => setItems(cur => cur.filter(x => x.id + '-' + x.size + '-' + x.color !== key)); const toggleFavorite = (id) => setFavorites((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]); const count = items.reduce((s, x) => s + x.quantity, 0); const close = () => setDrawer(null); return _jsxs("div", { className: "site", dir: ar ? 'rtl' : 'ltr', children: [_jsx(Header, { ar: ar, toggle: () => setAr(x => !x), navigate: setPage, open: setDrawer, count: count }), page === 'home' && _jsx(Home, { ar: ar, navigate: setPage, select: setModal }), " ", page === 'shop' && _jsx(Shop, { ar: ar, add: p => add(p), select: setModal, open: setDrawer, sort: sort, filter: filter, setFilter: setFilter }), " ", page === 'checkout' && _jsx(Checkout, { ar: ar, items: items }), " ", page === 'details' && _jsx(ProductDetails, { ar: ar, product: details || products[0], add: add, buyNow: (p, size, color) => { add(p, size, color); setPage('checkout'); }, navigate: setPage }), " ", page === 'refund' && _jsxs("main", { className: "refund", children: [_jsx("h1", { children: "Refund Policy" }), _jsx("p", { children: "Our refund policy information." })] }), _jsx(Footer, { ar: ar, navigate: setPage }), modal && _jsx(ProductModal, { ar: ar, product: modal, close: () => setModal(null), add: add, details: () => { setDetails(modal); setModal(null); setPage('details'); } }), drawer && _jsx("div", { className: "overlay", onMouseDown: e => e.target === e.currentTarget && close(), children: _jsxs("div", { className: drawer === 'sort' ? 'drawer sort-drawer' : 'drawer', children: [drawer === 'cart' && _jsxs(_Fragment, { children: [_jsx("button", { className: "close", onClick: close, children: _jsx(X, {}) }), _jsx(Cart, { ar: ar, items: items, checkout: () => { close(); setPage('checkout'); }, update: update, remove: remove, shop: () => { close(); setPage('shop'); } })] }), drawer === 'account' && _jsxs(_Fragment, { children: [_jsx("button", { className: "close", onClick: close, children: _jsx(X, {}) }), _jsx(Account, { ar: ar })] }), drawer === 'search' && _jsx(SearchPanel, { ar: ar, close: close, select: setModal }), drawer === 'favorites' && _jsx(FavoritesPanel, { ar: ar, favorites: favorites, toggle: toggleFavorite, close: close, select: setModal }), drawer === 'filter' && _jsx(FilterPanel, { ar: ar, value: filter, setValue: v => setFilter(current => ({ ...current, ...v })), close: close }), " ", drawer === 'sort' && _jsxs("section", { className: "filter-panel", children: [_jsx("button", { className: "close", onClick: close, children: _jsx(X, {}) }), _jsx("h2", { children: t(ar, 'Sort') }), [['default', 'Best Sellers'], ['recent', 'Last Arrive'], ['low', 'Price Low To High'], ['high', 'Price High To Low']].map(([v, l]) => _jsx("button", { className: "filter-sort-option", onClick: () => { setSort(v); close(); }, children: ar ? { 'Best Sellers': 'الأكثر مبيعًا', 'Last Arrive': 'الأحدث وصولًا', 'Price Low To High': 'السعر من الأقل للأعلى', 'Price High To Low': 'السعر من الأعلى للأقل' }[l] || l : l }, v))] }), drawer === 'menu' && _jsxs("nav", { className: "mobile-menu", children: [_jsx("button", { onClick: () => { close(); setPage('shop'); }, children: t(ar, 'Shop') }), _jsx("a", { href: "/track-order", children: ar ? 'تتبع الطلب' : 'Track Order' }), _jsx("a", { href: "/collections", children: ar ? 'المجموعات' : 'Collection' }), _jsx("button", { onClick: () => { close(); setAr(x => !x); }, children: ar ? 'English' : 'العربية' })] })] }) })] });
 }
 export { imageUrls };

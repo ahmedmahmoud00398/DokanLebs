@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata = {
     title: 'Dokan Lebss — Everyday essentials',
     description: 'Dokan Lebss clothing and everyday essentials.',
-    generator: 'v0.app',
+    generator: 'CodeScope company',
     icons: {
         icon: [
             {

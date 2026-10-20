@@ -5,6 +5,7 @@ import { addressService, orderService } from '@/lib/store-services';
 import { ChevronDown, ChevronLeft, ChevronRight, Heart, Menu, Minus, Plus, Search, ShoppingBag, UserRound, X } from 'lucide-react';
 const imageUrls = { sweatshirt: '/placeholder.svg?height=640&width=520&query=black+sweatshirt+placeholder', jacket: '/placeholder.svg?height=640&width=520&query=leather+jacket+placeholder', search: '/placeholder.svg?height=640&width=520&query=clothing+product+placeholder', checkout: '/placeholder.svg?height=640&width=520&query=denim+jacket+placeholder', denim: '/placeholder.svg?height=640&width=520&query=jeans+placeholder', filter: '/placeholder.svg?height=640&width=520&query=white+pants+placeholder' };
 const products = [['ZARA JEANS', 850, 'denim', 'Jeans'], ['H&M PANTS', 1500, 'checkout', 'Jeans'], ['LV JEANS', 1200, 'search', 'Jeans'], ['SWEAT PANTS', 1300, 'sweatshirt', 'Sweat Pants'], ['WIDE LEG PANTS', 850, 'denim', 'Wild Leg'], ['CLASSIC PANTAS', 1500, 'jacket', 'Tailer Pants'], ['CHARMUEIS PANTS', 500, 'filter', 'Jeans'], ['OLX PANTS', 1300, 'search', 'Wild Leg'], ['TAILER PANTS', 850, 'jacket', 'Tailer Pants'], ['SPORT PANTS', 1500, 'sweatshirt', 'Sweat Pants'], ['SHORT', 500, 'checkout', 'Tailer Pants'], ['ADIDAS ADIBREAK', 1300, 'denim', 'Wild Leg']].map(([name, price, image, category]) => ({ id: String(name).toLowerCase().replaceAll(' ', '-'), name: String(name), price: Number(price), image: imageUrls[image], category: String(category), colors: ['Cream', 'Black', 'Sage'], sizes: ['XS', 'S', 'M', 'L', 'XL'] }));
+const GOOGLE_MAPS_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6820.65458044208!2d30.004066167978696!3d31.267040899999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5dbe05e3734a7%3A0xfd097bc1dd8ea03c!2zRG9ra2FuIExlYnMgLSDYr9mP2YPYp9mGINmE2KjYsw!5e0!3m2!1sar!2seg!4v1792441775856!5m2!1sar!2seg';
 const t = (ar, en) => ar ? ({ 'Wear Your Vibe': 'ارتدِ أسلوبك', 'Shop Now': 'تسوق الآن', 'Collections': 'المجموعات', 'New Arrival': 'وصل حديثًا', 'Best-Sellers': 'الأكثر مبيعًا', 'Sales': 'التخفيضات', 'shop by category': 'تسوق حسب الفئة', 'Winter collection': 'مجموعة الشتاء', 'Our store': 'متجرنا', 'SHOP': 'المتجر', 'Shop': 'تسوق', 'Category': 'الفئات', 'About': 'من نحن', 'Sort': 'ترتيب', 'Filter': 'فلترة', 'Add to cart': 'أضف للسلة', 'Add To Cart': 'أضف إلى السلة', 'View Full Details': 'عرض التفاصيل الكاملة', 'Bag': 'السلة', 'Remove': 'حذف', 'Your bag is empty.': 'السلة فارغة.', 'Checkout': 'الدفع', 'Delivery': 'التوصيل', 'Payment Method': 'طريقة الدفع', 'Shipping Method': 'طريقة الشحن', 'Complete Order': 'إتمام الطلب', 'Product Details': 'تفاصيل المنتج', 'PRODUCT COLOR': 'لون المنتج', 'PRODUCT SIZE': 'مقاس المنتج', 'See Results': 'عرض النتائج', 'Colors': 'الألوان', 'Size': 'المقاس', 'Contact Us': 'تواصل معنا', 'Account': 'الحساب', 'Search': 'بحث', 'Menu': 'القائمة', 'Favorites': 'المفضلة', 'Cart': 'السلة', 'Top': 'القمصان', 'Bottoms': 'البناطيل', 'Accessories': 'إكسسوارات', 'Shoes': 'أحذية', 'CONTACT US': 'تواصل معنا', 'CATEGORIES': 'الفئات', 'CUSTOMERS': 'العملاء', 'SOCIAL MEDIA': 'وسائل التواصل', 'Refund Policy': 'سياسة الاسترجاع', 'Support': 'الدعم', 'Bottom': 'البناطيل', 'Log in': 'تسجيل الدخول', 'Sign up': 'إنشاء حساب', 'Saved addresses': 'العناوين المحفوظة', 'Add address': 'إضافة عنوان', 'Save address': 'حفظ العنوان', 'Select address': 'اختر العنوان', 'New address': 'عنوان جديد', 'Cash on delivery': 'الدفع عند الاستلام', 'Place order': 'تأكيد الطلب', 'No address saved': 'لا توجد عناوين محفوظة' }[en] || en) : en;
 function Header({ ar, toggle, navigate, open, count, favoriteCount }) {
     const label = (x) => t(ar, x);
@@ -259,20 +260,14 @@ function Home({ ar, navigate, select }) {
                     <img className="absolute inset-0 h-full w-full object-cover" src="5d59833a-0f59-4800-aae3-d1b9b28e2c69.jpeg" alt="" />
                 </div>
                 <div className="relative aspect-[1.45] overflow-hidden bg-neutral-100">
-                    {process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ? (
-                        <iframe
-                            className="absolute inset-0 h-full w-full border-0"
-                            title={ar ? 'موقع متجر دكان لبس على الخريطة' : 'Dokan Lebss store location map'}
-                            src={process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            allowFullScreen
-                        />
-                    ) : (
-                        <p className="grid h-full min-h-[96px] place-items-center p-2 text-center text-[8px] text-neutral-600 md:text-xs">
-                            {ar ? 'أضف رابط تضمين Google Maps في NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL' : 'Add your Google Maps embed URL in NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL'}
-                        </p>
-                    )}
+                    <iframe
+                        className="absolute inset-0 h-full w-full border-0"
+                        title={ar ? 'موقع متجر دكان لبس على الخريطة' : 'Dokan Lebss store location map'}
+                        src={GOOGLE_MAPS_EMBED_URL}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        allowFullScreen
+                    />
                 </div>
             </div>
         </section>

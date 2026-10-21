@@ -13,7 +13,7 @@ export function Header({ ar, toggle, navigate, open, count, favoriteCount }) {
         return () => window.removeEventListener('dokan-favorites-updated', updateCount);
     }, []);
     return <>
-        <div className="promo">
+        <div className="promo max-[700px]:!hidden">
             <div className="promo-track">
                 <div className="promo-group">
                     <span>{ar ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
@@ -27,37 +27,39 @@ export function Header({ ar, toggle, navigate, open, count, favoriteCount }) {
                 </div>
             </div>
         </div>
-        <header className="header">
+        <header className="header" dir={ar ? 'rtl' : 'ltr'}>
             <div className="mobile-controls">
-                <button className="mobile-only icon-button" onClick={() => open('menu')} aria-label={label('Menu')}>
+                <button className="mobile-only icon-button" onClick={(event) => open('menu', event.currentTarget)} aria-label={label('Menu')}>
                     <Menu size={18} />
                 </button>
                 <button className="mobile-only mobile-language" onClick={toggle}>{ar ? 'EN' : 'عربي'}
                 </button>
             </div>
-            <button className="logo" onClick={() => navigate('home')}>Dokan Lebss</button>
-            <nav>
-                <a href="/track-order">{ar ? 'تتبع الطلب' : 'Track Order'}</a>
-                <a href="/collections">{ar ? 'المجموعات' : 'Collection'}</a>
-                <button onClick={() => navigate('shop')}>{label('Shop')}</button>
-                <button onClick={() => navigate('shop')}>{label('New Arrival')}</button>
-                <button onClick={() => navigate('refund')}>{label('About')}</button>
-                <button className="language-nav" onClick={toggle}>{ar ? 'EN' : 'عربي'}</button>
-            </nav>
+            <div className="header-brand-nav">
+                <button className="logo" onClick={() => navigate('home')}>Dokan Lebss</button>
+                <nav>
+                    <button onClick={() => navigate('shop')}>{label('Shop')}</button>
+                    <button onClick={() => navigate('shop')}>{label('New Arrival')}</button>
+                    <a href="/track-order">{ar ? 'تتبع الطلب' : 'Track Order'}</a>
+                    <a href="/collections">{ar ? 'المجموعات' : 'Collection'}</a>
+                </nav>
+            </div>
             <div className="header-actions">
-                <button onClick={() => open('search')} aria-label={label('Search')}>
+                <button className="language-nav" onClick={toggle}>{ar ? 'EN' : 'عربي'}</button>
+                <button onClick={(event) => open('search', event.currentTarget)} aria-label={label('Search')}>
                     <Search size={18} />
                 </button>
-                <button onClick={() => open('favorites')} aria-label={`${label('Favorites')} (${savedFavoriteCount})`}>
+                <button onClick={(event) => open('favorites', event.currentTarget)} aria-label={`${label('Favorites')} (${savedFavoriteCount})`}>
                     <Heart size={19} fill={savedFavoriteCount ? 'currentColor' : 'none'} />
                     <span className="header-favorites-count">{savedFavoriteCount}</span>
                 </button>
-                <button onClick={() => open('account')} aria-label={label('Account')}>
-                    <UserRound size={18} /></button>
-                <button onClick={() => open('cart')} aria-label={label('Cart')}>
+                <button onClick={(event) => open('cart', event.currentTarget)} aria-label={`${label('Cart')} (${count})`}>
                     <ShoppingBag size={18} />
+                    <span className="header-cart-count">{count}</span>
                 </button>
-                <span>{count}</span>
+                <button onClick={() => open('account')} aria-label={label('Account')}>
+                    <UserRound size={18} />
+                </button>
             </div>
         </header>
     </>;

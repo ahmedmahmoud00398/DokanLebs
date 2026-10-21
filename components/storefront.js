@@ -23,6 +23,7 @@ export default function Storefront() {
   const [favorites, setFavorites] = useState([]);
   const [modal, setModal] = useState(null);
   const [drawer, setDrawer] = useState(null);
+  const [drawerAnchor, setDrawerAnchor] = useState(null);
   const [sort, setSort] = useState('default');
   const [filter, setFilter] = useState({ category: '', max: null, color: '', size: '' });
   const [details, setDetails] = useState(null);
@@ -86,12 +87,37 @@ export default function Storefront() {
     (item) => `${item.id}-${item.size}-${item.color}` !== key,
   ));
 
-  const toggleFavorite = (id) => setFavorites((current) => (
-    current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-  ));
+  const toggleFavorite = (id) => {
+    const nextFavorites = favorites.includes(id)
+      ? favorites.filter((item) => item !== id)
+      : [...favorites, id];
+    setFavorites(nextFavorites);
+    window.dispatchEvent(new CustomEvent('dokan-favorites-updated', { detail: nextFavorites }));
+  };
 
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
-  const closeDrawer = () => setDrawer(null);
+  const openDrawer = (name, trigger) => {
+    const supportsPopover = ['menu', 'search', 'favorites', 'cart'].includes(name);
+    if (trigger && supportsPopover && window.matchMedia('(max-width: 820px)').matches) {
+      const bounds = trigger.getBoundingClientRect();
+      const viewportWidth = document.documentElement.clientWidth;
+      const width = Math.min(name === 'menu' ? 280 : 340, viewportWidth - 24);
+      const alignRight = bounds.left + bounds.width / 2 > viewportWidth / 2;
+      const left = alignRight ? bounds.right - width : bounds.left;
+      setDrawerAnchor({
+        top: bounds.bottom + 8,
+        left: Math.max(12, Math.min(left, viewportWidth - width - 12)),
+        width,
+      });
+    } else {
+      setDrawerAnchor(null);
+    }
+    setDrawer(name);
+  };
+  const closeDrawer = () => {
+    setDrawer(null);
+    setDrawerAnchor(null);
+  };
 
   return (
     <div className={`${styles.storefront} site`} dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'en'}>
@@ -99,7 +125,7 @@ export default function Storefront() {
         ar={isArabic}
         toggle={toggleLanguage}
         navigate={setPage}
-        open={setDrawer}
+        open={openDrawer}
         count={itemCount}
       />
       {page === 'home' && <Home ar={isArabic} navigate={setPage} select={setModal} />}
@@ -149,6 +175,7 @@ export default function Storefront() {
       <StorefrontDrawer
         ar={isArabic}
         drawer={drawer}
+        drawerAnchor={drawerAnchor}
         close={closeDrawer}
         items={items}
         update={update}

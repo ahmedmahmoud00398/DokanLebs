@@ -9,6 +9,7 @@ import { t } from './data';
 export default function StorefrontDrawer({
   ar,
   drawer,
+  drawerAnchor,
   close,
   items,
   update,
@@ -23,9 +24,18 @@ export default function StorefrontDrawer({
   setAr,
 }) {
   if (!drawer) return null;
+  const anchored = Boolean(drawerAnchor && ['menu', 'search', 'favorites', 'cart'].includes(drawer));
 
   return (
-    <div className="overlay drawer-overlay" onMouseDown={(event) => event.target === event.currentTarget && close()}>
+    <div
+      className={`overlay drawer-overlay${anchored ? ' drawer-popover' : ''}`}
+      style={anchored ? {
+        '--popover-top': `${drawerAnchor.top}px`,
+        '--popover-left': `${drawerAnchor.left}px`,
+        '--popover-width': `${drawerAnchor.width}px`,
+      } : undefined}
+      onMouseDown={(event) => event.target === event.currentTarget && close()}
+    >
       <div className={`drawer drawer-${drawer}${drawer === 'sort' ? ' sort-drawer' : ''}`}>
         {drawer === 'cart' && (
           <>
@@ -46,7 +56,16 @@ export default function StorefrontDrawer({
             <Account ar={ar} />
           </>
         )}
-        {drawer === 'search' && <SearchPanel ar={ar} close={close} select={setModal} />}
+        {drawer === 'search' && (
+          <SearchPanel
+            ar={ar}
+            close={close}
+            select={setModal}
+            favorites={favorites}
+            toggleFavorite={toggleFavorite}
+            shop={() => setPage('shop')}
+          />
+        )}
         {drawer === 'favorites' && (
           <FavoritesPanel
             ar={ar}

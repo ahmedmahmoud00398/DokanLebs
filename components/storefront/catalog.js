@@ -340,7 +340,7 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
   );
 }
 
-export function SearchPanel({ ar, close, select }) {
+export function SearchPanel({ ar, close, select, favorites, toggleFavorite, shop }) {
   const [query, setQuery] = useState('');
   const matches = products.filter((product) => (
     `${product.name} ${product.category} ${t(ar, product.name)} ${t(ar, product.category)}`
@@ -348,7 +348,7 @@ export function SearchPanel({ ar, close, select }) {
   ));
 
   return (
-    <section className="filter-panel">
+    <section className="filter-panel search-panel">
       <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
       <h2>{ar ? 'بحث' : 'Search'}</h2>
       <div className="searchbar">
@@ -362,15 +362,50 @@ export function SearchPanel({ ar, close, select }) {
         />
       </div>
       {query && (matches.length ? (
-        <div className="search-results">
-          {matches.map((product) => (
-            <button onClick={() => { close(); select(product); }} key={product.id}>
-              <img src={product.image} alt={t(ar, product.name)} />
-              <p>{t(ar, product.name)}</p>
-              <p>{product.price} LE</p>
-            </button>
-          ))}
-        </div>
+        <>
+          <div className="search-results-heading">
+            <span>{ar ? `${matches.length} نتائج` : `${matches.length} results`}</span>
+            <a
+              href="/shop"
+              onClick={(event) => {
+                event.preventDefault();
+                close();
+                shop();
+              }}
+            >
+              {ar ? 'عرض الكل' : 'see all'}
+            </a>
+          </div>
+          <div className="search-results">
+            {matches.map((product) => {
+              const saved = favorites.includes(product.id);
+              return (
+                <div className="search-result-card" key={product.id}>
+                  <button
+                    type="button"
+                    className="search-result-select"
+                    onClick={() => { close(); select(product); }}
+                  >
+                    <span className="search-result-image">
+                      <img src={product.image} alt={t(ar, product.name)} />
+                    </span>
+                    <p>{t(ar, product.name)}</p>
+                    <p>{product.price} LE</p>
+                  </button>
+                  <button
+                    type="button"
+                    className="search-result-favorite"
+                    aria-label={saved ? t(ar, 'Remove from favorites') : t(ar, 'Add to favorites')}
+                    aria-pressed={saved}
+                    onClick={() => toggleFavorite(product.id)}
+                  >
+                    <Heart size={18} fill={saved ? 'currentColor' : '#fff'} aria-hidden="true" />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </>
       ) : (
         <p role="status">{ar ? 'لا توجد نتائج.' : 'No products found.'}</p>
       ))}

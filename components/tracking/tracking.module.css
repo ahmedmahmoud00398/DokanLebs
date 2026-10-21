@@ -1,0 +1,64 @@
+
+.trackingRoot :global(.track-order-page) { max-width: 1080px; min-height: 560px; margin: 0 auto; padding: 24px 28px 56px; }
+.trackingRoot :global(.track-breadcrumb) { color: #888; font-size: 12px; margin-bottom: 12px; }
+.trackingRoot :global(.track-breadcrumb a) { color: inherit; text-decoration: none; }
+.trackingRoot :global(.track-order-page > h1) { margin: 0 0 4px; font-size: 36px; letter-spacing: -1.2px; }
+.trackingRoot :global(.track-intro) { color: #777; margin: 0 0 26px; }
+.trackingRoot :global(.tracking-form) { display: grid; grid-template-columns: 1.1fr 1.1fr auto; gap: 14px; align-items: end; position: relative; padding: 18px; border: 1px solid #eee; border-radius: 14px; box-shadow: 0 4px 16px #0000000b; margin-bottom: 20px; }
+.trackingRoot :global(.tracking-form label) { display: grid; gap: 6px; color: #777; font-size: 10px; }
+.trackingRoot :global(.tracking-form input) { height: 42px; padding: 10px 12px; border: 1px solid #aaa; border-radius: 6px; color: #111; }
+.trackingRoot :global(.tracking-form input[aria-invalid="true"]) { border-color: #dc2626; }
+.trackingRoot :global(.tracking-form button) { width: auto; min-width: 150px; margin: 0; border-radius: 7px; }
+.trackingRoot :global(.tracking-form-error) { position: absolute; color: #c52222; font-size: 11px; top: calc(100% + 2px); left: 20px; }
+.trackingRoot :global(.tracking-empty) { min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin: 20px 0; padding: 24px; border: 1px solid #eee; border-radius: 14px; box-shadow: 0 4px 16px #0000000b; }
+.trackingRoot :global(.tracking-empty > span) { width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 12px; border-radius: 50%; background: #f3f3f3; font-size: 23px; }
+.trackingRoot :global(.tracking-empty h2) { font-size: 19px; margin: 0 0 5px; }
+.trackingRoot :global(.tracking-empty p) { max-width: 460px; color: #888; font-size: 12px; margin: 0; }
+.trackingRoot :global(.tracking-help-grid) { display: grid; grid-template-columns: 1.3fr .7fr; gap: 18px; margin: 18px 0; }
+.trackingRoot :global(.tracking-card) { padding: 20px; border: 1px solid #eee; border-radius: 13px; box-shadow: 0 4px 16px #0000000b; }
+.trackingRoot :global(.tracking-card h2), .trackingRoot :global(.tracking-updates h2) { font-size: 15px; margin: 0 0 15px; }
+.trackingRoot :global(.tracking-card ol) { list-style: none; margin: 0; padding: 0; }
+.trackingRoot :global(.tracking-card ol li) { position: relative; padding: 0 0 13px 27px; }
+.trackingRoot :global(.tracking-card ol li::before) { content: ''; position: absolute; left: 0; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #111; }
+.trackingRoot :global(.tracking-card ol li strong) { font-size: 12px; }
+.trackingRoot :global(.tracking-card ol li p) { color: #888; font-size: 11px; margin: 3px 0; }
+.trackingRoot :global(.tracking-sample) { padding: 14px; border-radius: 10px; background: #f1eee8; font-size: 11px; }
+.trackingRoot :global(.tracking-sample p) { color: #777; margin: 8px 0; }
+.trackingRoot :global(.tracking-sample > strong) { display: block; padding: 8px; background: white; color: #b12626; font-size: 16px; }
+.trackingRoot :global(.tracking-sample small) { display: block; margin-top: 8px; color: #777; }
+.trackingRoot :global(.tracking-contact) { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 18px 0 0; padding: 17px 20px; background: #f0f0f0; border-radius: 12px; }
+.trackingRoot :global(.tracking-contact p) { color: #777; font-size: 11px; margin: 4px 0 0; }
+.trackingRoot :global(.tracking-contact a), .trackingRoot :global(.tracking-actions a) { display: inline-block; padding: 11px 17px; color: #fff; background: #050505; border-radius: 7px; text-decoration: none; font-size: 11px; }
+.trackingRoot :global(.tracking-status) { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 23px; color: white; background: #111; border-radius: 14px; }
+.trackingRoot :global(.tracking-status h2) { margin: 8px 0 4px; font-size: 24px; }
+.trackingRoot :global(.tracking-status p), .trackingRoot :global(.tracking-status small) { color: #bbb; }
+.trackingRoot :global(.tracking-eta) { display: grid; gap: 7px; align-content: start; text-align: right; }
+.trackingRoot :global(.tracking-eta strong) { font-size: 22px; }
+.trackingRoot :global(.tracking-progress) { grid-column: 1 / -1; display: flex; justify-content: space-between; margin: 10px 0 0; padding: 0; list-style: none; }
+.trackingRoot :global(.tracking-progress li) { color: #aaa; border-top: 2px solid #555; width: 100%; padding-top: 10px; font-size: 10px; }
+.trackingRoot :global(.tracking-progress li.complete) { border-color: white; color: white; }
+.trackingRoot :global(.tracking-details) { display: grid; grid-template-columns: 1.3fr .7fr; gap: 18px; margin-top: 18px; }
+.trackingRoot :global(.shipment-updates li) { display: grid; grid-template-columns: 16px 1fr auto; gap: 10px; align-items: start; padding: 12px 0; border-bottom: 1px solid #eee; }
+.trackingRoot :global(.shipment-updates p) { margin: 4px 0; color: #888; font-size: 11px; }
+.trackingRoot :global(.shipment-updates time) { color: #888; font-size: 10px; }
+.trackingRoot :global(.tracking-dot) { width: 9px; height: 9px; border: 1px solid #aaa; border-radius: 50%; margin-top: 3px; }
+.trackingRoot :global(.tracking-dot.done) { background: #111; border-color: #111; }
+.trackingRoot :global(.tracking-item) { display: grid; grid-template-columns: 44px 1fr auto; gap: 9px; align-items: center; padding: 8px 0; font-size: 11px; }
+.trackingRoot :global(.tracking-item img) { width: 44px; height: 44px; object-fit: cover; background: #eee; }
+.trackingRoot :global(.tracking-item small) { display: block; color: #888; }
+.trackingRoot :global(.tracking-total) { border-top: 1px solid #eee; margin-top: 12px; }
+.trackingRoot :global(.tracking-total p) { display: flex; justify-content: space-between; font-size: 11px; }
+.trackingRoot :global(.tracking-delivery) { border-top: 1px solid #eee; padding-top: 14px; font-size: 11px; }
+.trackingRoot :global(.tracking-delivery h2) { margin: 0 0 8px; }
+.trackingRoot :global(.tracking-delivery p) { margin: 5px 0; color: #666; }
+.trackingRoot :global(.tracking-error-icon) { color: #111; }
+.trackingRoot :global(.tracking-actions) { display: flex; gap: 10px; margin-top: 16px; }
+.trackingRoot :global(.tracking-actions .outline-button) { color: #111; background: white; border: 1px solid #ccc; }
+.trackingRoot :global(.tracking-spinner) { border: 3px solid #ddd; border-top-color: #111 !important; animation: spin .8s linear infinite; }
+@media (max-width: 700px) { .trackingRoot :global(.track-order-page) { padding: 22px 14px 36px; } .trackingRoot :global(.track-order-page > h1) { font-size: 29px; } .trackingRoot :global(.tracking-form) { grid-template-columns: 1fr; gap: 10px; } .trackingRoot :global(.tracking-form button) { width: 100%; } .trackingRoot :global(.tracking-form-error) { position: static; grid-column: 1; } .trackingRoot :global(.tracking-help-grid), .trackingRoot :global(.tracking-details) { grid-template-columns: 1fr; } .trackingRoot :global(.tracking-status) { grid-template-columns: 1fr; } .trackingRoot :global(.tracking-eta) { text-align: left; } .trackingRoot :global(.tracking-progress) { overflow-x: auto; } .trackingRoot :global(.tracking-progress li) { min-width: 85px; } .trackingRoot :global(.tracking-contact) { align-items: flex-start; flex-direction: column; }
+  .trackingRoot :global(.track-order-page) { padding: 22px 16px 36px; }
+  .trackingRoot :global(.tracking-card) { padding: 16px; }
+  .trackingRoot :global(.tracking-status) { padding: 18px; }
+  .trackingRoot :global(.tracking-status h2) { font-size: 21px; }
+  .trackingRoot :global(.tracking-progress) { padding-bottom: 4px; }
+  .trackingRoot :global(.tracking-contact) { padding: 16px; } }

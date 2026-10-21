@@ -80,12 +80,26 @@ export default function SecondarySiteHeader() {
         <span>{cartCount}</span>
       </div>
     </header>
-    {menuOpen && <nav id="secondary-mobile-nav" className="secondary-mobile-nav" aria-label={isArabic ? 'التنقل الرئيسي' : 'Main navigation'}>
-      <Link href="/track-order" onClick={() => setMenuOpen(false)}>{labels.track}</Link>
-      <Link href="/collections" onClick={() => setMenuOpen(false)}>{labels.collection}</Link>
-      <Link href="/" onClick={() => setMenuOpen(false)}>{labels.shop}</Link>
-      <Link href="/" onClick={() => setMenuOpen(false)}>{labels.arrival}</Link>
-      <Link href="/" onClick={() => setMenuOpen(false)}>{labels.about}</Link>
-    </nav>}
+    {menuOpen && (
+      <nav
+        id="secondary-mobile-nav"
+        className="hidden gap-0 border-b border-[#eee] bg-white px-4 pt-2 pb-4 max-[820px]:grid"
+        aria-label={isArabic ? 'التنقل الرئيسي' : 'Main navigation'}
+      >
+        {[labels.track, labels.collection, labels.shop, labels.arrival, labels.about].map((label, index) => {
+          const href = ['/track-order', '/collections', '/', '/', '/'][index];
+          return (
+            <Link
+              className="border-b border-[#eee] px-1 py-3 text-inherit no-underline"
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              key={label}
+            >
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
+    )}
   </>;
 }

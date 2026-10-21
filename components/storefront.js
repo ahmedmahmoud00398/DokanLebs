@@ -143,10 +143,10 @@ function Home({ ar, navigate, select }) {
     );
 
     return <main>
-        <section className="relative flex h-[56vw] min-h-[190px] items-center overflow-hidden bg-neutral-100 px-3 text-white md:h-[950px] md:max-h-none md:px-10  ">
+        <section className="home-hero relative flex h-[56vw] min-h-[190px] items-center overflow-hidden bg-neutral-100 px-3 text-white md:h-[950px] md:max-h-none md:px-10  ">
             <img className="absolute inset-0 h-full w-full w-contain b" src="006194cc-799c-4d07-b3ea-21cd5ac57274.jpeg" alt="" />
             <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
-            <div className="relative z-10 mt-[60px] max-w-[620px] md:mt-[100px]">
+            <div className="home-hero-content relative z-10 mt-[60px] max-w-[620px] md:mt-[100px]">
                 <h1 className="w-600 mb-[18px] text-[9xl] font-bold leading-[.95] tracking-[-1px] md:text-[clamp(42px,6vw,128px)] md:tracking-[-3px]">
                     {label('Wear Your Vibe')}
                 </h1>
@@ -165,8 +165,8 @@ function Home({ ar, navigate, select }) {
             </div>
         </section>
 
-        <section className="px-[9px] pt-7 md:px-[26px] mt-[64px] mb-[64px]">
-            <div className="grid grid-cols-3 gap-[5px] md:gap-[24px]">
+        <section className="home-campaigns px-[9px] pt-7 md:px-[26px] mt-[64px] mb-[64px]">
+            <div className="home-campaign-grid grid grid-cols-3 gap-[5px] md:gap-[24px]">
                 {campaignCards.map(({ title, image }) => (
                     <button
                         className="group relative aspect-square overflow-hidden bg-neutral-600 text-left"
@@ -183,24 +183,24 @@ function Home({ ar, navigate, select }) {
             </div>
         </section>
 
-        <section className=" w-full px-[9px] pt-4 md:px-[26px] md:pt-[30px] mt-[64px]">
+        <section className="home-categories w-full px-[9px] pt-4 md:px-[26px] md:pt-[30px] mt-[64px]">
             <p className="mb-[13px] text-[7px] font-semibold md:mb-5 md:text-2xl">{label('Shop By Category')}</p>
-            <div className="grid grid-cols-4 gap-[5px] md:gap-[20px]">
+            <div className="home-category-grid grid grid-cols-4 gap-[5px] md:gap-[20px]">
                 {categoryCards.map(({ title, image }) => (
                     <button
-                        className="relative overflow-hidden bg-neutral-200 md:aspect-[.84] "
+                        className="home-category-card relative overflow-hidden bg-neutral-200 md:aspect-[.84] "
                         type="button"
                         key={title}
                         onClick={() => navigate('shop')}
                     >
                         <img className="absolute inset-0 h-full w-full object-cover" src={image} alt="" />
-                        <span className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-white px-[5px] py-[3px] text-[8px] text-black md:px-8 md:py-[15px] md:text-[18px] md:font-semibold">{label(title)}</span>
+                        <span className="home-category-label absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-white px-[5px] py-[3px] text-[8px] text-black md:px-8 md:py-[15px] md:text-[18px] md:font-semibold">{label(title)}</span>
                     </button>
                 ))}
             </div>
         </section>
 
-        <section className="px-[9px] pt-[18px] md:px-[26px] md:pt-[46px] mt-[64px]">
+        <section className="home-winter px-[9px] pt-[18px] md:px-[26px] md:pt-[46px] mt-[64px]">
             <div className="mb-[13px] flex min-h-[23px] items-center justify-start" dir="ltr">
                 <p className="text-[7px] md:text-2xl font-semibold">{ar ? 'مجموعة الشتاء' : 'Winter collection'}</p>
             </div>
@@ -210,7 +210,7 @@ function Home({ ar, navigate, select }) {
             >
                 {orderedWinterSelection.map((product) => (
                     <button
-                        className="min-w-0 basis-[calc(25%_-_6px)] snap-start text-start md:basis-[calc(25%_-_8px)]"
+                        className="winter-product-card min-w-0 basis-[calc(25%_-_6px)] snap-start text-start md:basis-[calc(25%_-_8px)]"
                         type="button"
                         key={product.id}
                         onClick={() => select(product)}
@@ -218,8 +218,8 @@ function Home({ ar, navigate, select }) {
                         <span className="relative block aspect-square overflow-hidden bg-neutral-200">
                             <img className="absolute inset-0 h-full w-full object-cover" src={product.image} alt="" />
                         </span>
-                        <span className="mt-[5px] block text-[7px] leading-[1.2] md:text-xl">{product.name}</span>
-                        <span className="block text-[7px] md:text-xl">{product.price} LE</span>
+                        <span className="winter-product-name mt-[5px] block text-[7px] leading-[1.2] md:text-xl">{product.name}</span>
+                        <span className="winter-product-price block text-[7px] md:text-xl">{product.price} LE</span>
                     </button>
                 ))}
             </div>
@@ -243,7 +243,7 @@ function Home({ ar, navigate, select }) {
             </div>
         </section>
 
-        <section className="mt-[18px] bg-black px-4 py-5 text-center text-white md:mt-40 md:px-5 md:py-[248px] md:mb-20">
+        <section className="home-sale mt-[18px] bg-black px-4 py-5 text-center text-white md:mt-40 md:px-5 md:py-[248px] md:mb-20">
             <p className="mb-3 text-sm leading-[1.35] md:mb-6 md:text-4xl">{ar ? 'خصم 25٪ إذا طلبت من الموقع' : '25% sale if you order from website'}</p>
             <button
                 className=" !bg-white px-3 py-[6px] text-[8px] !text-black md:px-[24px] md:py-[10px] md:text-[24px]"
@@ -253,7 +253,7 @@ function Home({ ar, navigate, select }) {
             </button>
         </section>
 
-        <section className="px-[9px] pt-3 md:px-[26px] md:pt-[46px] md:mb-44">
+        <section className="home-store px-[9px] pt-3 md:px-[26px] md:pt-[46px] md:mb-44">
             <p className="mb-[10px] text-[9px] md:mb-5 md:text-2xl font-semibold">{ar ? 'متجرنا' : 'Our store'}</p>
             <div className="grid grid-cols-2 gap-1">
                 <div className="relative aspect-[1.45] overflow-hidden bg-neutral-200">

@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Heart, Menu, Search, ShoppingBag, UserRound } from 'lucide-react';
+import { Heart, Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react';
 
 export default function SecondarySiteHeader() {
   const [isArabic, setIsArabic] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const language = localStorage.getItem('dokan-language') === 'ar';
@@ -59,7 +60,7 @@ export default function SecondarySiteHeader() {
     </div>
     <header className="header">
       <div className="mobile-controls">
-        <Link className="mobile-only icon-button" href="/" aria-label={isArabic ? 'القائمة' : 'Menu'}><Menu size={18} /></Link>
+        <button className="mobile-only icon-button" type="button" aria-label={isArabic ? 'القائمة' : 'Menu'} aria-expanded={menuOpen} aria-controls="secondary-mobile-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
         <button className="mobile-only mobile-language" type="button" onClick={toggleLanguage}>{labels.language}</button>
       </div>
       <Link className="logo" href="/">Dokan Lebss</Link>
@@ -79,5 +80,12 @@ export default function SecondarySiteHeader() {
         <span>{cartCount}</span>
       </div>
     </header>
+    {menuOpen && <nav id="secondary-mobile-nav" className="secondary-mobile-nav" aria-label={isArabic ? 'التنقل الرئيسي' : 'Main navigation'}>
+      <Link href="/track-order" onClick={() => setMenuOpen(false)}>{labels.track}</Link>
+      <Link href="/collections" onClick={() => setMenuOpen(false)}>{labels.collection}</Link>
+      <Link href="/" onClick={() => setMenuOpen(false)}>{labels.shop}</Link>
+      <Link href="/" onClick={() => setMenuOpen(false)}>{labels.arrival}</Link>
+      <Link href="/" onClick={() => setMenuOpen(false)}>{labels.about}</Link>
+    </nav>}
   </>;
 }

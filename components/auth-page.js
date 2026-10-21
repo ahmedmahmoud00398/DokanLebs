@@ -58,8 +58,8 @@ export default function AuthPage({ mode }) {
   };
 
   return (
-    <main dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'en'} className="auth-page grid min-h-[75vh] place-items-center bg-[#f1f1ef] px-5 py-9 max-[820px]:px-[18px] max-[700px]:px-3 max-[700px]:py-4">
-      <section className="grid min-h-[650px] w-full max-w-[1120px] grid-cols-2 gap-7 rounded-[20px] bg-white p-3 max-[820px]:min-h-0 max-[700px]:block max-[700px]:p-2" aria-labelledby="auth-title">
+    <main dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'en'} className="auth-page grid min-h-[100vh] place-items-center bg-[#f1f1ef] px-5 py-9 max-[820px]:px-[18px] max-[700px]:px-3 max-[700px]:py-4">
+      <section className="grid min-h-full w-full max-w-[1120px] grid-cols-2 gap-7 rounded-[20px] bg-white p-3 max-[820px]:min-h-0 max-[700px]:block max-[700px]:p-2" aria-labelledby="auth-title">
         <div className="flex min-h-[620px] items-center justify-center gap-[18px] overflow-hidden rounded-[14px] bg-[linear-gradient(145deg,#e4e5e4,#cfd1d0)] max-[820px]:min-h-[500px] max-[700px]:hidden" aria-label={text('Dokan Lebss clothing accessories', 'دوكان اللبس للملابس والإكسسوارات')}>
           <span className="flex h-[78%] w-[43%] rotate-[10deg] flex-col justify-between bg-[#f8f8f6] p-6 text-[#111] shadow-[0_18px_35px_#0003]">
             <strong className="text-[clamp(25px,4vw,52px)] leading-[.85]">DOKAN<br />LEBSS</strong>

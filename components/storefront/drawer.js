@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import { Cart, Account } from './cart-checkout';
 import { FavoritesPanel, SearchPanel } from './catalog';
@@ -23,11 +24,45 @@ export default function StorefrontDrawer({
   setModal,
   setAr,
 }) {
-  if (!drawer) return null;
+  const overlayRef = useRef(null);
   const anchored = Boolean(drawerAnchor && ['menu', 'search', 'favorites', 'cart'].includes(drawer));
+
+  useEffect(() => {
+    if (drawer !== 'search' || !overlayRef.current) return undefined;
+
+    const overlay = overlayRef.current;
+    const site = overlay.closest('.site');
+    const header = site?.querySelector('.header');
+    const searchButton = header?.querySelector('[aria-label="Search"], [aria-label="بحث"]');
+    if (!header || !searchButton) return undefined;
+
+    let frame = 0;
+    const updatePosition = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (window.matchMedia('(max-width: 820px)').matches) {
+          overlay.style.setProperty('--popover-top', `${searchButton.getBoundingClientRect().bottom + 8}px`);
+        } else {
+          overlay.style.setProperty('--search-top', `${header.getBoundingClientRect().bottom}px`);
+        }
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('scroll', updatePosition, true);
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', updatePosition, true);
+      window.removeEventListener('resize', updatePosition);
+    };
+  }, [drawer]);
+
+  if (!drawer) return null;
 
   return (
     <div
+      ref={overlayRef}
       className={`overlay drawer-overlay${anchored ? ' drawer-popover' : ''}`}
       style={anchored ? {
         '--popover-top': `${drawerAnchor.top}px`,

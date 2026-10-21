@@ -63,11 +63,11 @@
 }
 :local(.storefront) :global(.drawer-search) {
   position: absolute;
-  top: 94px;
+  top: var(--search-top, 94px);
   inset-inline: 0;
   width: 100%;
   height: auto;
-  max-height: calc(100dvh - 94px);
+  max-height: calc(100dvh - var(--search-top, 94px));
   overflow-y: auto;
   padding: 10px 16px 20px;
   box-shadow: 0 10px 20px #0001;
@@ -403,6 +403,26 @@
   :local(.storefront[dir="rtl"]) :global(.drawer-popover .filter-panel .close) {
     right: auto;
     left: 0;
+  }
+  :local(.storefront) :global(.drawer-popover > .drawer-search) {
+    right: 0;
+    left: 0;
+    width: auto;
+    max-width: none;
+    padding: 12px 14px 10px;
+    border-radius: 0;
+  }
+  :local(.storefront) :global(.drawer-popover > .drawer-search .close) {
+    top: 12px;
+    right: 10px;
+  }
+  :local(.storefront[dir="rtl"]) :global(.drawer-popover > .drawer-search .close) {
+    right: auto;
+    left: 10px;
+  }
+  :local(.storefront) :global(.drawer-search .searchbar) {
+    padding-top: 4px;
+    padding-bottom: 8px;
   }
 }
 

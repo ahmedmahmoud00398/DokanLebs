@@ -458,18 +458,30 @@
   background-color: #aab9a9;
 }
 :local(.storefront) :global(.winter-products-next > button) {
-  animation: winter-product-slide-next 220ms ease-out both;
+  animation: winter-product-slide-next 380ms cubic-bezier(.22, 1, .36, 1) both;
 }
 :local(.storefront) :global(.winter-products-previous > button) {
-  animation: winter-product-slide-previous 220ms ease-out both;
+  animation: winter-product-slide-previous 380ms cubic-bezier(.22, 1, .36, 1) both;
+}
+:local(.storefront) :global(.winter-products-next > button:nth-child(2)),
+:local(.storefront) :global(.winter-products-previous > button:nth-child(2)) {
+  animation-delay: 45ms;
+}
+:local(.storefront) :global(.winter-products-next > button:nth-child(3)),
+:local(.storefront) :global(.winter-products-previous > button:nth-child(3)) {
+  animation-delay: 90ms;
+}
+:local(.storefront) :global(.winter-products-next > button:nth-child(4)),
+:local(.storefront) :global(.winter-products-previous > button:nth-child(4)) {
+  animation-delay: 135ms;
 }
 @keyframes winter-product-slide-next {
-  from { opacity: .7; transform: translateX(12px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: .55; transform: translateX(26px) scale(.985); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
 }
 @keyframes winter-product-slide-previous {
-  from { opacity: .7; transform: translateX(-12px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: .55; transform: translateX(-26px) scale(.985); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
   :local(.storefront) :global(.winter-products-next > button),

@@ -53,7 +53,7 @@ export function Shop({ ar, select, open, sort, filter, setFilter }) {
               aria-pressed={category === item}
               key={item}
             >
-              {item}
+              {label(item)}
             </button>
           ))}
         </div>
@@ -69,8 +69,8 @@ export function Shop({ ar, select, open, sort, filter, setFilter }) {
           {visible.map((product) => (
             <article key={product.id}>
               <button className="product-open" onClick={() => select(product)}>
-                <img src={product.image} alt={product.name} />
-                <h2>{product.name}</h2>
+                <img src={product.image} alt={label(product.name)} />
+                <h2>{label(product.name)}</h2>
                 <p>{product.price} LE</p>
               </button>
               <button className="quick-add" onClick={() => select(product)}>
@@ -119,12 +119,12 @@ export function ProductModal({ ar, product, close, add, details }) {
       onMouseDown={(event) => event.target === event.currentTarget && close()}
     >
       <div className="product-modal" role="dialog" aria-modal="true" aria-label={t(ar, 'Product Details')}>
-        <button className="close" onClick={close} aria-label="Close"><X /></button>
-        <img src={product.image} alt={product.name} />
+        <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
+        <img src={product.image} alt={t(ar, product.name)} />
         <div>
           <div className="product-modal-heading">
-            <h2>{product.name}</h2>
-            <FavoriteButton product={product} />
+            <h2>{t(ar, product.name)}</h2>
+            <FavoriteButton ar={ar} product={product} />
           </div>
           <h3>
             {shownPrice} LE
@@ -137,12 +137,12 @@ export function ProductModal({ ar, product, close, add, details }) {
               ? 'تفاصيل المنتج ومعلومات المقاس والخامة والعناية.'
               : 'Product details, sizing, material, care and cleaning instructions.'}
           </p>
-          <p>{t(ar, 'PRODUCT COLOR')}{color ? ` : ${color}` : ''}</p>
+          <p>{t(ar, 'PRODUCT COLOR')}{color ? ` : ${t(ar, color)}` : ''}</p>
           <div className="swatches">
             {colors.map((option) => (
               <button
                 type="button"
-                aria-label={option}
+                aria-label={t(ar, option)}
                 aria-pressed={color === option}
                 className={`swatch ${String(option).toLowerCase()}`}
                 style={{
@@ -185,7 +185,7 @@ export function ProductModal({ ar, product, close, add, details }) {
   );
 }
 
-export function FavoriteButton({ product }) {
+export function FavoriteButton({ product, ar = false }) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -216,12 +216,12 @@ export function FavoriteButton({ product }) {
     <button
       type="button"
       className="favorite-toggle"
-      aria-label={saved ? 'Remove from favorites' : 'Add to favorites'}
+      aria-label={saved ? t(ar, 'Remove from favorites') : t(ar, 'Add to favorites')}
       aria-pressed={saved}
       onClick={toggle}
     >
       <Heart size={18} fill={saved ? 'currentColor' : 'none'} />
-      {saved ? 'Saved' : 'Save'}
+      {saved ? t(ar, 'Saved') : t(ar, 'Save')}
     </button>
   );
 }
@@ -250,7 +250,7 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
     <main className="product-details">
       <div className="details-gallery">
         <div className="details-image">
-          <img src={photos[activePhoto]} alt={product.name} />
+          <img src={photos[activePhoto]} alt={t(ar, product.name)} />
         </div>
         <div className="details-thumbnails">
           {photos.map((photo, index) => (
@@ -259,7 +259,7 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
               key={photo + index}
               className={activePhoto === index ? 'active' : ''}
               onClick={() => setActivePhoto(index)}
-              aria-label={`View product image ${index + 1}`}
+              aria-label={ar ? `عرض صورة المنتج ${index + 1}` : `View product image ${index + 1}`}
             >
               <img src={photo} alt="" />
             </button>
@@ -268,8 +268,8 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
       </div>
       <div className="details-copy">
         <div className="product-modal-heading">
-          <h1>{product.name}</h1>
-          <FavoriteButton product={product} />
+          <h1>{t(ar, product.name)}</h1>
+          <FavoriteButton ar={ar} product={product} />
         </div>
         <h2>
           {shownPrice} LE
@@ -282,7 +282,7 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
             ? 'تفاصيل المنتج ومعلومات الخامة والمقاس والعناية.'
             : 'Product details, sizing, material, care and cleaning instructions.'}
         </p>
-        <p>{t(ar, 'PRODUCT COLOR')}{color ? ` : ${color}` : ''}</p>
+        <p>{t(ar, 'PRODUCT COLOR')}{color ? ` : ${t(ar, color)}` : ''}</p>
         <div className="swatches">
           {colors.map((option) => (
             <button
@@ -290,7 +290,7 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
               className={`swatch ${String(option).toLowerCase()} ${color === option ? 'selected' : ''}`}
               style={{ backgroundColor: swatchColors[option] || option }}
               onClick={() => setColor(option)}
-              aria-label={option}
+              aria-label={t(ar, option)}
               aria-pressed={color === option}
               key={option}
             />
@@ -343,16 +343,18 @@ export function ProductDetails({ ar, product, add, buyNow, navigate }) {
 export function SearchPanel({ ar, close, select }) {
   const [query, setQuery] = useState('');
   const matches = products.filter((product) => (
-    `${product.name} ${product.category}`.toLowerCase().includes(query.trim().toLowerCase())
+    `${product.name} ${product.category} ${t(ar, product.name)} ${t(ar, product.category)}`
+      .toLowerCase().includes(query.trim().toLowerCase())
   ));
 
   return (
     <section className="filter-panel">
-      <button className="close" onClick={close} aria-label="Close"><X /></button>
+      <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
       <h2>{ar ? 'بحث' : 'Search'}</h2>
       <div className="searchbar">
         <Search size={18} />
         <input
+          dir="auto"
           autoFocus
           value={query}
           onChange={(event) => setQuery(event.target.value)}
@@ -363,8 +365,8 @@ export function SearchPanel({ ar, close, select }) {
         <div className="search-results">
           {matches.map((product) => (
             <button onClick={() => { close(); select(product); }} key={product.id}>
-              <img src={product.image} alt={product.name} />
-              <p>{product.name}</p>
+              <img src={product.image} alt={t(ar, product.name)} />
+              <p>{t(ar, product.name)}</p>
               <p>{product.price} LE</p>
             </button>
           ))}
@@ -385,7 +387,7 @@ export function FavoritesPanel({ ar, favorites, toggle, close, select }) {
 
   return (
     <section className="filter-panel">
-      <button className="close" onClick={close} aria-label="Close"><X /></button>
+      <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
       <h2>{ar ? 'المفضلة' : 'Favorites'}</h2>
       {savedProducts.length === 0 ? (
         <p role="status">{ar ? 'لم تحفظ أي منتجات في المفضلة بعد.' : 'You have no saved favorites yet.'}</p>
@@ -393,8 +395,8 @@ export function FavoritesPanel({ ar, favorites, toggle, close, select }) {
         savedProducts.map((product) => (
           <div className="saved-address" key={product.id}>
             <button type="button" onClick={() => { close(); select(product); }}>
-              <img className="h-16 w-16 object-cover" src={product.image} alt={product.name} />
-              {product.name} · {product.price} LE
+              <img className="h-16 w-16 object-cover" src={product.image} alt={t(ar, product.name)} />
+              {t(ar, product.name)} · {product.price} LE
             </button>
             <button className="text-link" onClick={() => toggle(product.id)}>
               {ar ? 'إزالة' : 'Remove'}

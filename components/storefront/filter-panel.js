@@ -12,17 +12,9 @@ export function FilterPanel({ ar, value, setValue, close }) {
     ['L', 'Large'],
     ['XL', 'Extra Large'],
   ];
-  const sizeLabels = {
-    'Extra Small': 'صغير جدًا',
-    'Extra Large': 'كبير جدًا',
-    Small: 'صغير',
-    Medium: 'متوسط',
-    Large: 'كبير',
-  };
-
   return (
     <section className="filter-panel">
-      <button className="close" onClick={close} aria-label="Close"><X /></button>
+      <button className="close" onClick={close} aria-label={label('Close')}><X /></button>
       <h2>{label('Filter')}</h2>
       <hr />
       <h3>{label('Colors')}</h3>
@@ -31,7 +23,8 @@ export function FilterPanel({ ar, value, setValue, close }) {
           <button
             type="button"
             key={name}
-            aria-label={name}
+            data-color={name}
+            aria-label={label(name)}
             aria-pressed={value.color === name}
             className={value.color === name ? 'active' : ''}
             onClick={() => setValue({ ...value, color: value.color === name ? '' : name })}
@@ -48,7 +41,7 @@ export function FilterPanel({ ar, value, setValue, close }) {
             className={value.size === code ? 'active' : ''}
             onClick={() => setValue({ ...value, size: value.size === code ? '' : code })}
           >
-            {ar ? sizeLabels[name] : name}
+            {label(name)}
           </button>
         ))}
       </div>

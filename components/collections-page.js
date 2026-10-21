@@ -4,18 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { collectionService } from '@/lib/store-services';
 import SecondarySiteHeader from '@/components/secondary-site-header';
+import { useSiteLanguage } from '@/lib/use-site-language';
+import { t } from '@/components/storefront/data';
 
 export default function CollectionsPage() {
   const [products, setProducts] = useState([]);
   const [state, setState] = useState('loading');
-  const [isArabic, setIsArabic] = useState(false);
-
-  useEffect(() => {
-    const syncLanguage = (event) => setIsArabic(event.detail === 'ar');
-    setIsArabic(localStorage.getItem('dokan-language') === 'ar');
-    window.addEventListener('dokan-language-changed', syncLanguage);
-    return () => window.removeEventListener('dokan-language-changed', syncLanguage);
-  }, []);
+  const { isArabic } = useSiteLanguage();
   const load = useCallback(async () => {
     setState('loading');
     try {
@@ -35,8 +30,9 @@ export default function CollectionsPage() {
     <>
       <SecondarySiteHeader />
       <main
-        className="mx-auto min-h-[65vh] max-w-[1180px] px-[26px] pt-8 pb-20 max-[1100px]:px-5 max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-[52px]"
+        className="collection-page mx-auto min-h-[65vh] max-w-[1180px] px-[26px] pt-8 pb-20 max-[1100px]:px-5 max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-[52px]"
         dir={isArabic ? 'rtl' : 'ltr'}
+        lang={isArabic ? 'ar' : 'en'}
       >
         <p className="mb-5 text-xs text-[#777] max-[700px]:mb-5">
           <Link className="text-inherit" href="/">{text('Home', 'الرئيسية')}</Link>
@@ -74,8 +70,8 @@ export default function CollectionsPage() {
             {products.map((product) => (
               <article className="group cursor-pointer transition-transform duration-[250ms] hover:-translate-y-1" key={product.id}>
                 <div>
-                  <img className="aspect-[.87] w-full object-cover transition-transform duration-[350ms] group-hover:scale-[1.018]" src={product.image} alt={product.name} />
-                  <h2 className="mt-[10px] mb-[5px] text-base font-normal max-[700px]:text-sm">{product.name}</h2>
+                  <img className="aspect-[.87] w-full object-cover transition-transform duration-[350ms] group-hover:scale-[1.018]" src={product.image} alt={t(isArabic, product.name)} />
+                  <h2 className="mt-[10px] mb-[5px] text-base font-normal max-[700px]:text-sm">{t(isArabic, product.name)}</h2>
                   <p className="m-0 text-base max-[700px]:text-sm">{product.price} LE</p>
                 </div>
               </article>

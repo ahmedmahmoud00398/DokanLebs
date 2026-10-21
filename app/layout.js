@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 export const metadata = {
-    title: 'Dokan Lebss — Everyday essentials',
+    title: 'Dokan Lebss',
     description: 'Dokan Lebss clothing and everyday essentials.',
     generator: 'CodeScope company',
     icons: {

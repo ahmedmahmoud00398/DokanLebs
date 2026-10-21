@@ -62,3 +62,39 @@
   .trackingRoot :global(.tracking-status h2) { font-size: 21px; }
   .trackingRoot :global(.tracking-progress) { padding-bottom: 4px; }
   .trackingRoot :global(.tracking-contact) { padding: 16px; } }
+
+.trackingRoot[dir="rtl"] :global(.track-order-page),
+.trackingRoot[dir="rtl"] :global(.tracking-form),
+.trackingRoot[dir="rtl"] :global(.tracking-status),
+.trackingRoot[dir="rtl"] :global(.tracking-contact),
+.trackingRoot[dir="rtl"] :global(.tracking-progress),
+.trackingRoot[dir="rtl"] :global(.shipment-updates li),
+.trackingRoot[dir="rtl"] :global(.tracking-item) {
+  direction: rtl;
+}
+.trackingRoot[dir="rtl"] :global(.tracking-form-error) {
+  left: auto;
+  right: 20px;
+}
+.trackingRoot[dir="rtl"] :global(.tracking-card ol li) {
+  padding: 0 27px 13px 0;
+}
+.trackingRoot[dir="rtl"] :global(.tracking-card ol li::before) {
+  left: auto;
+  right: 0;
+}
+.trackingRoot[dir="rtl"] :global(.tracking-eta) {
+  text-align: left;
+}
+.trackingRoot[dir="rtl"] :global(.tracking-form input) {
+  direction: ltr;
+  text-align: left;
+}
+@media (max-width: 700px) {
+  .trackingRoot[dir="rtl"] :global(.tracking-form-error) {
+    right: auto;
+  }
+  .trackingRoot[dir="rtl"] :global(.tracking-eta) {
+    text-align: right;
+  }
+}

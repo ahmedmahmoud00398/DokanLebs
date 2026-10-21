@@ -41,13 +41,13 @@ export function Home({ ar, navigate, select }) {
                     {label('Wear Your Vibe')}
                 </h1>
                 <button
-                    className="mt-[50px] mr-1 !bg-black px-[11px] py-[6px] text-[8px] !text-white md:px-[22px] md:py-[12px] md:text-[11px] ml-[10px] max-[700px]:mt-4 max-[700px]:mr-[6px] max-[700px]:ml-0 max-[700px]:inline-flex max-[700px]:min-h-10 max-[700px]:items-center max-[700px]:justify-center max-[700px]:px-3 max-[700px]:py-2 max-[700px]:!text-xs"
+                    className="mt-[50px] me-1 !bg-black px-[11px] py-[6px] text-[8px] !text-white md:px-[22px] md:py-[12px] md:text-[11px] ms-[10px] max-[700px]:mt-4 max-[700px]:me-[6px] max-[700px]:ms-0 max-[700px]:inline-flex max-[700px]:min-h-10 max-[700px]:items-center max-[700px]:justify-center max-[700px]:px-3 max-[700px]:py-2 max-[700px]:!text-xs"
                     onClick={() => navigate('shop')}
                 >
                     {label('Shop Now')}
                 </button>
                 <a
-                    className="mt-[50px] mr-1 !bg-white px-[11px] py-[6px] text-[8px] !text-black md:px-[22px] md:py-[12px] md:text-[15px] ml-[10px] max-[700px]:mt-4 max-[700px]:mr-[6px] max-[700px]:ml-0 max-[700px]:inline-flex max-[700px]:min-h-10 max-[700px]:items-center max-[700px]:justify-center max-[700px]:px-3 max-[700px]:py-2 max-[700px]:text-xs"
+                    className="mt-[50px] me-1 !bg-white px-[11px] py-[6px] text-[8px] !text-black md:px-[22px] md:py-[12px] md:text-[15px] ms-[10px] max-[700px]:mt-4 max-[700px]:me-[6px] max-[700px]:ms-0 max-[700px]:inline-flex max-[700px]:min-h-10 max-[700px]:items-center max-[700px]:justify-center max-[700px]:px-3 max-[700px]:py-2 max-[700px]:text-xs"
                     href="/collections"
                 >
                     {label('Collections')}
@@ -59,7 +59,7 @@ export function Home({ ar, navigate, select }) {
             <div className="grid grid-cols-3 gap-[5px] md:gap-[24px] max-[700px]:gap-2">
                 {campaignCards.map(({ title, image }) => (
                     <button
-                        className="group relative aspect-square overflow-hidden bg-neutral-600 text-left"
+                        className="group relative aspect-square overflow-hidden bg-neutral-600 text-start"
                         type="button"
                         key={title}
                         aria-label={label(title)}
@@ -67,7 +67,7 @@ export function Home({ ar, navigate, select }) {
                     >
                         <img className="absolute inset-0 h-full w-full object-cover" src={image} alt="" />
                         <span className="absolute inset-0 bg-black/20" aria-hidden="true" />
-                        <span className="absolute bottom-[7px] left-[7px] z-10 text-[8px] text-white md:bottom-[10px] md:left-[10px] md:text-xl max-[700px]:text-[clamp(10px,2.8vw,14px)]">{label(title)}</span>
+                        <span className="absolute bottom-[7px] start-[7px] z-10 text-[8px] text-white md:bottom-[10px] md:start-[10px] md:text-xl max-[700px]:text-[clamp(10px,2.8vw,14px)]">{label(title)}</span>
                     </button>
                 ))}
             </div>
@@ -91,7 +91,7 @@ export function Home({ ar, navigate, select }) {
         </section>
 
         <section className="px-[9px] pt-[18px] md:px-[26px] md:pt-[46px] mt-[64px] max-[820px]:mt-[clamp(32px,7vw,56px)] max-[700px]:mt-[38px]">
-            <div className="mb-[13px] flex min-h-[23px] items-center justify-start" dir="ltr">
+            <div className="mb-[13px] flex min-h-[23px] items-center justify-start">
                 <p className="text-[7px] md:text-2xl font-semibold max-[700px]:text-[15px]">{ar ? 'مجموعة الشتاء' : 'Winter collection'}</p>
             </div>
             <div
@@ -108,7 +108,7 @@ export function Home({ ar, navigate, select }) {
                         <span className="relative block aspect-square overflow-hidden bg-neutral-200">
                             <img className="absolute inset-0 h-full w-full object-cover" src={product.image} alt="" />
                         </span>
-                        <span className="mt-[5px] block text-[7px] leading-[1.2] md:text-xl max-[700px]:text-xs">{product.name}</span>
+                        <span className="mt-[5px] block text-[7px] leading-[1.2] md:text-xl max-[700px]:text-xs">{label(product.name)}</span>
                         <span className="block text-[7px] md:text-xl max-[700px]:text-xs">{product.price} LE</span>
                     </button>
                 ))}
@@ -145,7 +145,7 @@ export function Home({ ar, navigate, select }) {
 
         <section className="px-[9px] pt-3 md:px-[26px] md:pt-[46px] md:mb-44 max-[820px]:mt-[clamp(32px,7vw,56px)] max-[700px]:mt-[38px]">
             <p className="mb-[10px] text-[9px] md:mb-5 md:text-2xl font-semibold max-[700px]:text-[15px]">{ar ? 'متجرنا' : 'Our store'}</p>
-            <div className="grid grid-cols-2 gap-1 max-[700px]:gap-2">
+            <div className="grid grid-cols-2 gap-4 max-[700px]:gap-2">
                 <div className="relative aspect-[1.45] overflow-hidden bg-neutral-200">
                     <img className="absolute inset-0 h-full w-full object-cover" src="5d59833a-0f59-4800-aae3-d1b9b28e2c69.jpeg" alt="" />
                 </div>

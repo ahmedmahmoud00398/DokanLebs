@@ -3,17 +3,15 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Heart, Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react';
+import { useSiteLanguage } from '@/lib/use-site-language';
 
 export default function SecondarySiteHeader() {
-  const [isArabic, setIsArabic] = useState(false);
+  const { isArabic, toggleLanguage } = useSiteLanguage();
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const language = localStorage.getItem('dokan-language') === 'ar';
-    setIsArabic(language);
-
     try {
       const favorites = JSON.parse(localStorage.getItem('dokan-favorites') || '[]');
       const cart = JSON.parse(localStorage.getItem('dokan-cart') || '[]');
@@ -25,26 +23,12 @@ export default function SecondarySiteHeader() {
     }
   }, []);
 
-  useEffect(() => {
-    document.documentElement.lang = isArabic ? 'ar' : 'en';
-    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
-  }, [isArabic]);
-
-  const toggleLanguage = () => {
-    const nextLanguage = !isArabic;
-    setIsArabic(nextLanguage);
-    localStorage.setItem('dokan-language', nextLanguage ? 'ar' : 'en');
-    document.documentElement.lang = nextLanguage ? 'ar' : 'en';
-    document.documentElement.dir = nextLanguage ? 'rtl' : 'ltr';
-    window.dispatchEvent(new CustomEvent('dokan-language-changed', { detail: nextLanguage ? 'ar' : 'en' }));
-  };
-
   const labels = isArabic
     ? { track: 'تتبع الطلب', collection: 'المجموعات', shop: 'تسوق', arrival: 'وصل حديثًا', about: 'من نحن', search: 'بحث', favorites: 'المفضلة', account: 'الحساب', cart: 'السلة', language: 'English' }
     : { track: 'Track Order', collection: 'Collection', shop: 'Shop', arrival: 'New Arrival', about: 'About', search: 'Search', favorites: 'Favorites', account: 'Account', cart: 'Cart', language: 'عربي' };
 
   return <>
-    <div className="promo">
+    <div className="promo" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'en'}>
       <div className="promo-track">
         <div className="promo-group">
           <span>{isArabic ? 'خصم 25٪ عند الطلب من الموقع الآن' : 'sale up 25% if you order from website now'}</span>
@@ -58,7 +42,7 @@ export default function SecondarySiteHeader() {
         </div>
       </div>
     </div>
-    <header className="header">
+    <header className="header" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'en'}>
       <div className="mobile-controls">
         <button className="mobile-only icon-button" type="button" aria-label={isArabic ? 'القائمة' : 'Menu'} aria-expanded={menuOpen} aria-controls="secondary-mobile-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
         <button className="mobile-only mobile-language" type="button" onClick={toggleLanguage}>{labels.language}</button>
@@ -84,6 +68,8 @@ export default function SecondarySiteHeader() {
       <nav
         id="secondary-mobile-nav"
         className="hidden gap-0 border-b border-[#eee] bg-white px-4 pt-2 pb-4 max-[820px]:grid"
+        dir={isArabic ? 'rtl' : 'ltr'}
+        lang={isArabic ? 'ar' : 'en'}
         aria-label={isArabic ? 'التنقل الرئيسي' : 'Main navigation'}
       >
         {[labels.track, labels.collection, labels.shop, labels.arrival, labels.about].map((label, index) => {

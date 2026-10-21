@@ -143,13 +143,56 @@
   }
 }
 
-:local(.storefront) :global(.filter-colors button[aria-label="Cream"]) {
+:local(.storefront[dir="rtl"]) :global(.header-actions) {
+  margin-left: 0;
+  margin-right: auto;
+}
+:local(.storefront[dir="rtl"]) :global(.shop-tools),
+:local(.storefront[dir="rtl"]) :global(.cart-title),
+:local(.storefront[dir="rtl"]) :global(.cart-row),
+:local(.storefront[dir="rtl"]) :global(.checkout),
+:local(.storefront[dir="rtl"]) :global(.product-details) {
+  direction: rtl;
+}
+:local(.storefront[dir="rtl"]) :global(.overlay:not(.product-modal-overlay)) {
+  justify-content: flex-start;
+}
+:local(.storefront[dir="rtl"]) :global(.product-modal .close),
+:local(.storefront[dir="rtl"]) :global(.drawer .close) {
+  right: auto;
+  left: 24px;
+}
+:local(.storefront[dir="rtl"]) :global(.quick-add) {
+  left: auto;
+  right: 0;
+}
+:local(.storefront[dir="rtl"]) :global(.checkout .payment span) {
+  float: left;
+}
+:local(.storefront[dir="rtl"]) :global(.checkout input:not([type="tel"]):not([type="email"])),
+:local(.storefront[dir="rtl"]) :global(.checkout select) {
+  text-align: right;
+}
+:local(.storefront[dir="rtl"]) :global(.checkout input[type="tel"]) {
+  direction: ltr;
+  text-align: left;
+}
+:local(.storefront[dir="rtl"]) :global(.product-modal-overlay) {
+  direction: rtl;
+}
+@media (max-width: 820px) {
+  :local(.storefront[dir="rtl"]) :global(.header-actions) {
+    margin: 0;
+  }
+}
+
+:local(.storefront) :global(.filter-colors button[data-color="Cream"]) {
   background-color: #f5e9d7;
 }
-:local(.storefront) :global(.filter-colors button[aria-label="Black"]) {
+:local(.storefront) :global(.filter-colors button[data-color="Black"]) {
   background-color: #000;
 }
-:local(.storefront) :global(.filter-colors button[aria-label="Sage"]) {
+:local(.storefront) :global(.filter-colors button[data-color="Sage"]) {
   background-color: #aab9a9;
 }
 :local(.storefront) :global(.winter-products-next > button) {

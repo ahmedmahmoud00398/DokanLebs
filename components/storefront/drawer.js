@@ -29,7 +29,7 @@ export default function StorefrontDrawer({
       <div className={`drawer drawer-${drawer}${drawer === 'sort' ? ' sort-drawer' : ''}`}>
         {drawer === 'cart' && (
           <>
-            <button className="close" onClick={close} aria-label="Close"><X /></button>
+            <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
             <Cart
               ar={ar}
               items={items}
@@ -42,7 +42,7 @@ export default function StorefrontDrawer({
         )}
         {drawer === 'account' && (
           <>
-            <button className="close" onClick={close} aria-label="Close"><X /></button>
+            <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
             <Account ar={ar} />
           </>
         )}
@@ -66,7 +66,7 @@ export default function StorefrontDrawer({
         )}
         {drawer === 'sort' && (
           <section className="filter-panel">
-            <button className="close" onClick={close} aria-label="Close"><X /></button>
+            <button className="close" onClick={close} aria-label={t(ar, 'Close')}><X /></button>
             <h2>{t(ar, 'Sort')}</h2>
             {[
               ['default', 'Best Sellers'],

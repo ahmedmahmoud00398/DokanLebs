@@ -12,12 +12,13 @@ import {
 import { Checkout } from './storefront/cart-checkout';
 import StorefrontDrawer from './storefront/drawer';
 import styles from './storefront/storefront.module.css';
+import { useSiteLanguage } from '@/lib/use-site-language';
 
 export { imageUrls };
 
 export default function Storefront() {
   const [page, setPage] = useState('home');
-  const [isArabic, setIsArabic] = useState(false);
+  const { isArabic, toggleLanguage } = useSiteLanguage();
   const [items, setItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [modal, setModal] = useState(null);
@@ -36,8 +37,6 @@ export default function Storefront() {
   }, []);
 
   useEffect(() => {
-    setIsArabic(localStorage.getItem('dokan-language') === 'ar');
-
     try {
       const storedCart = JSON.parse(localStorage.getItem('dokan-cart') || '[]');
       if (Array.isArray(storedCart)) {
@@ -51,21 +50,10 @@ export default function Storefront() {
         setFavorites(storedFavorites.filter((id) => products.some((product) => product.id === id)));
       }
     } catch {
-      // Keep the storefront usable when persisted browser data is malformed.
     }
 
     setHydrated(true);
   }, []);
-
-  useEffect(() => {
-    if (hydrated) localStorage.setItem('dokan-language', isArabic ? 'ar' : 'en');
-  }, [isArabic, hydrated]);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    document.documentElement.lang = isArabic ? 'ar' : 'en';
-    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
-  }, [isArabic, hydrated]);
 
   useEffect(() => {
     if (hydrated) localStorage.setItem('dokan-cart', JSON.stringify(items));
@@ -106,10 +94,10 @@ export default function Storefront() {
   const closeDrawer = () => setDrawer(null);
 
   return (
-    <div className={`${styles.storefront} site`} dir={isArabic ? 'rtl' : 'ltr'}>
+    <div className={`${styles.storefront} site`} dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'en'}>
       <Header
         ar={isArabic}
-        toggle={() => setIsArabic((current) => !current)}
+        toggle={toggleLanguage}
         navigate={setPage}
         open={setDrawer}
         count={itemCount}
@@ -140,8 +128,8 @@ export default function Storefront() {
       )}
       {page === 'refund' && (
         <main className="refund">
-          <h1>Refund Policy</h1>
-          <p>Our refund policy information.</p>
+          <h1>{isArabic ? 'سياسة الاسترجاع' : 'Refund Policy'}</h1>
+          <p>{isArabic ? 'معلومات حول سياسة الاسترجاع الخاصة بنا.' : 'Our refund policy information.'}</p>
         </main>
       )}
       <Footer ar={isArabic} navigate={setPage} />
@@ -172,7 +160,7 @@ export default function Storefront() {
         favorites={favorites}
         toggleFavorite={toggleFavorite}
         setModal={setModal}
-        setAr={setIsArabic}
+        setAr={toggleLanguage}
       />
     </div>
   );

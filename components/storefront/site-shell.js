@@ -83,7 +83,7 @@ export function Footer({ ar, navigate }) {
                     <small>{label('CONTACT US')}</small>
                     <p><a className="text-inherit no-underline" href="tel:+201212813273">+20 121 281 3273</a></p>
                     <p><a className="text-inherit no-underline" href="mailto:Dokan.EL-Labas@GMAIL.COM">Dokan.EL-Labas@GMAIL.COM</a></p>
-                    <p>SAT - FRI 9AM -12PM</p>
+                    <p>{label('SAT - FRI 9AM -12PM')}</p>
                 </div>
                 <div>
                     <small>{label('CATEGORIES')}</small>
@@ -97,7 +97,7 @@ export function Footer({ ar, navigate }) {
                     <small>{label('CUSTOMERS')}</small>
                     <p><a className="text-inherit no-underline" href="/refund-policy" onClick={openRefundPolicy}>{label('Refund Policy')}</a></p>
                     <p><a className="text-inherit no-underline" href="mailto:Dokan.EL-Labas@GMAIL.COM">DOKAN.ELABAS@GMAIL.COM</a></p>
-                    <p>SAT - FRI 9AM -12PM</p>
+                    <p>{label('SAT - FRI 9AM -12PM')}</p>
                 </div>
                 <div>
                     <small>{label('SOCIAL MEDIA')}</small>

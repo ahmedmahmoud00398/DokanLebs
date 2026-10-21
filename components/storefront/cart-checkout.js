@@ -17,8 +17,8 @@ export function Cart({ ar, items, checkout, update, remove, shop }) {
               <div className="cart-row" key={itemKey}>
                 <img src={item.image} alt={item.name} />
                 <div>
-                  <h2>{item.name}</h2>
-                  <p>{item.color} / {item.size}</p>
+                  <h2>{t(ar, item.name)}</h2>
+                  <p>{t(ar, item.color)} / {item.size}</p>
                   <p>{item.price * item.quantity} LE</p>
                   <div className="quantity">
                     <button
@@ -60,6 +60,7 @@ export function Cart({ ar, items, checkout, update, remove, shop }) {
 }
 
 export function Checkout({ ar, items }) {
+    const label = (english) => t(ar, english);
     const empty = { country: '', firstName: '', lastName: '', name: '', phone: '', address: '', city: '', governorate: 'Alexandria' };
     const [addresses, setAddresses] = useState([]);
     const [selected, setSelected] = useState('');
@@ -130,29 +131,29 @@ export function Checkout({ ar, items }) {
 
     return <main className="checkout checkout-reference">
         <section className="checkout-delivery">
-            <h1>{ar ? 'التوصيل' : 'Delivery'}</h1>
-            {addresses.length > 0 && <div className="saved-addresses"><h2>{ar ? 'العناوين المحفوظة' : 'Saved addresses'} <small>({ar ? 'على هذا الجهاز' : 'on this device'})</small></h2>{addresses.map((address) => <div className="saved-address" key={address.id}><button type="button" className={selected === address.id ? 'selected' : ''} onClick={() => pick(address)} aria-pressed={selected === address.id}>{address.default ? '★ ' : ''}{address.name}, {address.address}, {address.city}</button><button type="button" className="text-link" onClick={() => removeAddress(address.id)}>{ar ? 'حذف' : 'Delete'}</button><button type="button" className="text-link" onClick={() => setDefault(address.id)}>{ar ? 'افتراضي' : 'Make default'}</button></div>)}</div>}
-            <button type="button" className="text-link" onClick={() => { setSelected(''); setForm(empty); setError(''); }}>{ar ? 'إضافة عنوان جديد' : 'Add a new address'}</button>
+            <h1>{label('Delivery')}</h1>
+            {addresses.length > 0 && <div className="saved-addresses"><h2>{label('Saved addresses')} <small>({label('on this device')})</small></h2>{addresses.map((address) => <div className="saved-address" key={address.id}><button type="button" className={selected === address.id ? 'selected' : ''} onClick={() => pick(address)} aria-pressed={selected === address.id}>{address.default ? '★ ' : ''}{address.name}, {address.address}, {address.city}</button><button type="button" className="text-link" onClick={() => removeAddress(address.id)}>{label('Delete')}</button><button type="button" className="text-link" onClick={() => setDefault(address.id)}>{label('Make default')}</button></div>)}</div>}
+            <button type="button" className="text-link" onClick={() => { setSelected(''); setForm(empty); setError(''); }}>{label('Add a new address')}</button>
             <form onSubmit={submit}>
-                <label>{ar ? 'الدولة / المنطقة' : 'Country'}<input required autoComplete="country-name" placeholder="Country / Region" value={form.country} onChange={(event) => setForm({ ...form, country: event.target.value })} /></label>
-                <div className="checkout-name-row"><label>{ar ? 'الاسم الأول' : 'First Name'}<input required autoComplete="given-name" value={form.firstName} onChange={(event) => setForm({ ...form, firstName: event.target.value })} /></label><label>{ar ? 'اسم العائلة' : 'Last Name'}<input required autoComplete="family-name" value={form.lastName} onChange={(event) => setForm({ ...form, lastName: event.target.value })} /></label></div>
-                <label>{ar ? 'العنوان' : 'Address'}<input required autoComplete="street-address" value={form.address} onChange={(event) => setForm({ ...form, address: event.target.value })} /></label>
-                <div className="checkout-name-row"><label>{ar ? 'المدينة' : 'City'}<input required autoComplete="address-level2" value={form.city} onChange={(event) => setForm({ ...form, city: event.target.value })} /></label><label>{ar ? 'المحافظة' : 'Governorate'}<select value={form.governorate} onChange={(event) => setForm({ ...form, governorate: event.target.value })}>{Object.entries(rates).map(([region, rate]) => <option key={region} value={region}>{region} · {rate}.00 LE</option>)}</select></label></div>
-                <label>{ar ? 'الهاتف' : 'Phone'}<input required type="tel" autoComplete="tel" value={form.phone} onChange={(event) => setForm({ ...form, phone: event.target.value })} /></label>
-                <label className="remember-address"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} />{ar ? 'حفظ هذه المعلومات للمرة القادمة' : 'Save this information for next time'}</label>
-                <button type="button" className="text-link" onClick={saveAddress}>{ar ? 'حفظ العنوان' : 'Save address'}</button>
-                <h2>{ar ? 'طريقة الشحن' : 'Shipping Method'}</h2><p className="shipping-choice">{form.governorate}<span>{shipping}.00 LE</span></p>
-                <h2>{ar ? 'طريقة الدفع' : 'Payment Method'}</h2><div className="checkout-payment"><span>{ar ? 'الدفع عند الاستلام' : 'Cash On Delivery (الدفع عند الاستلام)'}</span><b aria-hidden="true">✓</b></div>
-                <p className="payment-unavailable">{ar ? 'الدفع بالبطاقة غير متاح حتى يتم ربط مزود دفع.' : 'Card payment will be available when a payment provider is connected.'}</p>
+                <label>{label('Country')}<input required autoComplete="country-name" placeholder={label('Country / Region')} value={form.country} onChange={(event) => setForm({ ...form, country: event.target.value })} /></label>
+                <div className="checkout-name-row"><label>{label('First Name')}<input required autoComplete="given-name" value={form.firstName} onChange={(event) => setForm({ ...form, firstName: event.target.value })} /></label><label>{label('Last Name')}<input required autoComplete="family-name" value={form.lastName} onChange={(event) => setForm({ ...form, lastName: event.target.value })} /></label></div>
+                <label>{label('Address')}<input required autoComplete="street-address" value={form.address} onChange={(event) => setForm({ ...form, address: event.target.value })} /></label>
+                <div className="checkout-name-row"><label>{label('City')}<input required autoComplete="address-level2" value={form.city} onChange={(event) => setForm({ ...form, city: event.target.value })} /></label><label>{label('Governorate')}<select value={form.governorate} onChange={(event) => setForm({ ...form, governorate: event.target.value })}>{Object.entries(rates).map(([region, rate]) => <option key={region} value={region}>{label(region)} · {rate}.00 LE</option>)}</select></label></div>
+                <label>{label('Phone')}<input dir="ltr" required type="tel" autoComplete="tel" value={form.phone} onChange={(event) => setForm({ ...form, phone: event.target.value })} /></label>
+                <label className="remember-address"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} />{label('Save this information for next time')}</label>
+                <button type="button" className="text-link" onClick={saveAddress}>{label('Save address')}</button>
+                <h2>{label('Shipping Method')}</h2><p className="shipping-choice">{label(form.governorate)}<span>{shipping}.00 LE</span></p>
+                <h2>{label('Payment Method')}</h2><div className="checkout-payment"><span>{label('Cash On Delivery')}</span><b aria-hidden="true">✓</b></div>
+                <p className="payment-unavailable">{label('Card payment will be available when a payment provider is connected.')}</p>
                 {error && <p className="form-error" role="alert">{error}</p>}
                 <button className="black-button" type="submit" disabled={saving || !items.length}>{saving ? (ar ? 'جارٍ التحقق…' : 'Checking…') : (ar ? 'إتمام الطلب' : 'Complete Order')}</button>
             </form>
         </section>
-        <aside className="checkout-summary"><div className="checkout-summary-items">{items.map((item) => <div className="checkout-summary-item" key={item.id + '-' + item.size + '-' + item.color}><img src={item.image} alt="" /><span>{item.name} × {item.quantity}</span><strong>{item.price * item.quantity} LE</strong></div>)}</div>
-            <p className="summary-total"><span>{ar ? 'إجمالي المنتجات' : 'Total Items ' + items.reduce((sum, item) => sum + item.quantity, 0)}</span><span>{subtotal} LE</span></p>
+        <aside className="checkout-summary"><div className="checkout-summary-items">{items.map((item) => <div className="checkout-summary-item" key={item.id + '-' + item.size + '-' + item.color}><img src={item.image} alt="" /><span>{t(ar, item.name)} × {item.quantity}</span><strong>{item.price * item.quantity} LE</strong></div>)}</div>
+            <p className="summary-total"><span>{ar ? `إجمالي المنتجات ${items.reduce((sum, item) => sum + item.quantity, 0)}` : 'Total Items ' + items.reduce((sum, item) => sum + item.quantity, 0)}</span><span>{subtotal} LE</span></p>
             <p className="summary-total"><span>{ar ? 'الشحن' : 'Shipping'}</span><span>{shipping}.00 LE</span></p>
             <p className="summary-total total-line"><strong>{ar ? 'الإجمالي' : 'Total'}</strong><strong>{total}.00 LE</strong></p>
-            <p>{ar ? 'التوصيل خلال 4 أيام من تأكيد الطلب' : 'Shipping in 4 days from confirming the order'}</p>
+            <p>{label('Shipping in 4 days from confirming the order')}</p>
             <p>{form.firstName && name + ', ' + form.address + ', ' + form.city}</p>
         </aside>
     </main>;

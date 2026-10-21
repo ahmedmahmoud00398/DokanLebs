@@ -24,6 +24,8 @@ button { background: none; border: 0; color: inherit; cursor: pointer; transitio
 .header-actions { margin-inline-start: auto; margin-inline-end: 0; display: flex; align-items: center; gap: 20px; }
 .header-actions button { display: flex; align-items: center; direction: ltr; }
 .header-actions .language-nav { border: 0; border-radius: 0; padding: 0; margin: 0; font-size: 14px; }
+.header-actions .language-nav, .mobile-controls .mobile-language { transition: none; }
+.header-actions .language-nav:active, .mobile-controls .mobile-language:active { transform: none; }
 .header-actions .header-cart-count { margin-inline-start: 4px; font-size: 12px; line-height: 1; }
 .mobile-only { display: none; }
 main { animation: page-enter .42s ease both; } @keyframes page-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

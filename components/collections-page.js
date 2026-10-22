@@ -6,6 +6,7 @@ import { collectionService } from '@/lib/store-services';
 import SecondarySiteHeader from '@/components/secondary-site-header';
 import { useSiteLanguage } from '@/lib/use-site-language';
 import { t } from '@/components/storefront/data';
+import { Footer } from './storefront/site-shell';
 
 export default function CollectionsPage() {
   const [products, setProducts] = useState([]);
@@ -79,6 +80,7 @@ export default function CollectionsPage() {
           </div>
         )}
       </main>
+      <Footer />
     </>
   );
 }

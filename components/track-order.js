@@ -9,6 +9,7 @@ import Shipment from '@/components/tracking/shipment';
 import { translateTracking } from '@/lib/tracking-translations';
 import styles from '@/components/tracking/tracking.module.css';
 import { useSiteLanguage } from '@/lib/use-site-language';
+import { Footer } from './storefront/site-shell';
 
 const supportLink = 'https://wa.me/201212813273';
 
@@ -45,5 +46,5 @@ export default function TrackOrder() {
     {(status === 'not-found' || status === 'unavailable') && <><section className="tracking-empty tracking-error"><span>X</span><h2>{translateTracking(isArabic, status === 'not-found' ? 'We couldn’t find this order' : 'Tracking is temporarily unavailable')}</h2><p>{translateTracking(isArabic, error)}</p><div className="tracking-actions"><button className="black-button" onClick={reset}>{translateTracking(isArabic, 'Try again')}</button><a className="outline-button" href={supportLink} target="_blank" rel="noreferrer">{translateTracking(isArabic, 'Chat on WhatsApp')}</a></div></section><div className="tracking-help-grid"><HelpCard isArabic={isArabic} title="Things to check" entries={[["Order number format", "It starts with DL- followed by digits, like DL-10482."], ["Same WhatsApp number", "Use the same number you entered when you placed the order."], ["Just placed your order?", "It can take a few minutes to show up. Try again shortly."]]} /><HelpCard isArabic={isArabic} title="WHAT IT LOOKS LIKE" sample /></div></>}
     {status === 'found' && order && <Shipment order={order} isArabic={isArabic} />}
     <section className="tracking-contact"><div><strong>{translateTracking(isArabic, 'Need help with your order?')}</strong><p>{translateTracking(isArabic, 'Our team replies on WhatsApp, Sat – Fri, 9AM–12PM.')}</p></div><a href={supportLink} target="_blank" rel="noreferrer">{translateTracking(isArabic, 'Chat on WhatsApp')}</a></section>
-  </main><footer dir={isArabic ? 'rtl' : 'ltr'}><div className="footer-grid"><div><small>{translateTracking(isArabic, 'CONTACT US')}</small><p>+20 121 281 3273</p><p>Dokan.EL-Labas@GMAIL.COM</p><p>{translateTracking(isArabic, 'SAT - FRI 9AM -12PM')}</p></div><div><small>{translateTracking(isArabic, 'CATEGORIES')}</small><p>{translateTracking(isArabic, 'Top')}</p><p>{translateTracking(isArabic, 'Bottom')}</p><p>{translateTracking(isArabic, 'Accessories')}</p><p>{translateTracking(isArabic, 'Shoes')}</p></div><div><small>{translateTracking(isArabic, 'CUSTOMERS')}</small><p>{translateTracking(isArabic, 'Refund Policy')}</p><p>DOKAN.ELABAS@GMAIL.COM</p><p>{translateTracking(isArabic, 'SAT - FRI 9AM -12PM')}</p></div><div><small>{translateTracking(isArabic, 'SOCIAL MEDIA')}</small><p>FACEBOOK</p><p>INSTAGRAM</p><p>TIKTOK</p></div></div><div className="footer-brand">Dokan Lebss</div></footer></div>;
+  </main><Footer /></div>;
 }
